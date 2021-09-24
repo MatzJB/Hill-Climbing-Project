@@ -7,56 +7,69 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image/stb_image_write.h"
 
+
+#include<random>
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1
 #include <iostream>
 
 #include "math.h"
+#include <algorithm>
 
 using namespace std;
 
-struct rgba {
-	(unsigned char)r;
-	(unsigned char)g;
-	(unsigned char)b;
-	(unsigned char)a;
-};
+typedef struct{
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+	unsigned char a;
+} rgba;
 
 rgba get_pixel(unsigned char *img, int channels, int img_width, int img_height, int x, int y)
 {
-
 	int coordinate = (x + img_width*y)*channels;
 
 	rgba col;
-
-	col.r = *(img + coordinate);
-	col.g = *(img + coordinate + 1);
-	col.b = *(img + coordinate + 2);
-
 
 	if (channels == 4)
 	{
 		col.a = *(img + coordinate + 3);
 	}
 
+	col.r = *(img + coordinate);
+	col.g = *(img + coordinate + 1);
+	col.b = *(img + coordinate + 2);
+
 	return col;
 }
 
 void add_pixel(unsigned char *img, int channels, int img_width, int img_height, int x, int y, int r, int g, int b, int a)
 {
-	// assume image is layed out in memory row-wise [rgba, rgba], [row 1, row 2, row 3,..., row height]
+	// image is layed out in memory row-wise [rgba, rgba], [row 1, row 2, row 3,..., row height]
 	// upper left corner is (0,0)
 
-	int coordinate = (x + img_width*y)*channels; // works
-
-	*(img + coordinate) = (unsigned char)r; // red
-	*(img + coordinate + 1) = (unsigned char)g; // green
-	*(img + coordinate + 2) = (unsigned char)b; // blue  
+	int coordinate = (x + img_width*y)*channels; // works fine
+	float old_alpha = *(img + coordinate + 3) / 255.0;
+	float alpha = a / 255.0f;
 
 	if (channels == 4)
 	{
-		*(img + coordinate + 2) = (unsigned char)a; // alpha
+		//*(img + coordinate + 3) = *(img + coordinate + 3)*(1-alpha)*255 + (unsigned char) alpha*255; // alpha
+		*(img + coordinate + 3) = *(img + coordinate + 3); // alpha
 	}
+	
+	*(img + coordinate) = max(*(img + coordinate)*old_alpha + (unsigned char)r*(1-old_alpha), 255.0f); // r
+	*(img + coordinate+1) = max(*(img + coordinate+1)*old_alpha*a + (unsigned char)g*(1-old_alpha), 255.0f); // g
+	*(img + coordinate+2) = max(*(img + coordinate+2)*old_alpha*a + (unsigned char)b*(1-old_alpha), 255.0f); // b
 
+	//*(img + coordinate) = *(img + coordinate)*alpha;
+	//*(img + coordinate+1) = *(img + coordinate+1)*alpha;
+	//*(img + coordinate+2) = *(img + coordinate+2)*alpha;
+
+
+	//*(img + coordinate+2) = (unsigned char)b*(a / 255.0); // red
+	//*(img + coordinate + 1) = (unsigned char)g; // green
+	//*(img + coordinate + 2) = (unsigned char)b; // blue  
+														//add comp
 }
 
 // squared distance from xy to oxy
@@ -75,11 +88,10 @@ void add_disc(unsigned char *img, int channels,
 	{
 		for (int j = y - radius; j < y + radius; j++)
 		{
-			if (i < img_width && i > 0 && j > 0 && j < img_height)
+			if (i < img_width && i >= 0 && j >= 0 && j < img_height)
 			{
 				if (distance(x, y, i, j) < radius)
 				{
-
 					add_pixel(img, channels, img_width, img_height, i, j, r, g, b, a);
 				}
 			}
@@ -123,46 +135,61 @@ int main()
 	if (img == NULL)
 	{
 		printf("Error in loading the image\n");
-		cin >> i;
+		std::cin >> i;
 		exit(1);
 	}
 
 	printf("Loaded image with a width of %dpx, a height of %dpx and %d channels\n", template_width, template_height, template_channels);
 
-	/*
-		int shape_width, shape_height, shape_channels;
-		unsigned char *shp = stbi_load("D:\github\Hill-Climbing-Project\src\cpp\HCA\HCA\triangle.png", &shape_width, &shape_height, &shape_channels, 0);
 
-		if (shp == NULL)
+	//for (int i = 0; i < 100; i++) // add discs
+	{
+
+		//for (int j = 0; j < 100; j++) //
 		{
-			printf("Error in loading the image\n");
-			cin >> i;
-			exit(1);
+			// add disc
+
+
+		/*	int d = diff(img, img2, template_channels,
+				template_width, template_height);
+*/
+				int x = rand() % template_width;
+			int y = rand() % template_height;
+			int r = rand() % 100;
+			int red = rand() % 255;
+			int green = rand() % 255;
+			int blue = rand() % 255;
+			r = 75;
+			red = 255;
+			green = 0;
+			blue = 0;
+
+			add_disc(img, template_channels,
+				template_width, template_height,
+				100, 100,
+				r, 0, 0,
+				red, green, blue, 250);
+
+
+			add_disc(img, template_channels,
+				template_width, template_height,
+				200, 100,
+				r, 0, 0,
+				red, green, blue, 250);
+
 		}
 
-		printf("Loaded image with a width of %dpx, a height of %dpx and %d channels\n", shape_width, shape_height, shape_channels);
+		// add best disc to image
 
-		int channels = 4;
-		int width = 1000;
-		int height = 1000;
-		unsigned char *canvas = (unsigned char*) malloc(width*height*channels*sizeof(unsigned char));
-
-	*/
-
-
-	add_disc(img, template_channels,
-		template_width, template_height,
-		160, 160,
-		70, 0, 0,
-		255, 0, 0, 255);
+	}
 	//add_pixel(img, template_channels, template_width, template_height, template_width-1, template_height-1, 255, 0, 0, 255);
-
 
 	stbi_write_png("C:\\Users\\Matz\\Desktop\\output.png", template_width, template_height, template_channels, img, template_width * template_channels);
 
 
-	//printf("enter a number to quit\n");
-	//cin >> i;
+
+	printf("enter a number to quit\n");
+	std::cin >> i;
 
 
 	return 0;
