@@ -130,8 +130,8 @@ int main()
 	int png_channels = 4;
 	int bpp = 4*8;
 	unsigned char *img_template = (unsigned char *) stbi_load("C:\\Users\\Matz\\Desktop\\pd216-32.jpg", &template_width, &template_height, &template_channels, 0);
-	unsigned char *img_tmp = (unsigned char*) malloc(sizeof(unsigned char*)*template_width*template_width*png_channels*bpp);
-	unsigned char *img_out = (unsigned char*) malloc(sizeof(unsigned char*)*template_width*template_width*png_channels*bpp);
+	unsigned char *img_tmp = (unsigned char*) calloc(template_width*template_width*png_channels*bpp, sizeof(unsigned char*));
+	unsigned char *img_out = (unsigned char*) calloc(template_width*template_width*png_channels*bpp, sizeof(unsigned char*));
 
 	if (img_template == NULL)
 	{
