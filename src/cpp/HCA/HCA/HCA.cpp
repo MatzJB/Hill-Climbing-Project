@@ -1,6 +1,6 @@
 // HCA Hill Climbing Algorithm
 // Author: Matz Johansson B
-//
+// 27/9 2021
 
 #include "stdafx.h"
 #define STB_IMAGE_IMPLEMENTATION
@@ -15,6 +15,8 @@
 #include <algorithm>
 #include <string>   
 #include <time.h> 
+
+#include <chrono>
 
 using namespace std;
 
@@ -59,22 +61,29 @@ void add_pixel(unsigned char *img, int channels, int img_width, int img_height, 
 	// image is layed out in memory row-wise [rgba, rgba], [row 1, row 2, row 3,..., row height]
 	// upper left corner is (0,0)
 	int coordinate = (x + img_width*y)*channels; // works fine
-	float alpha_image = *(img + coordinate + 3) / 255.0f;
-	float alpha_added = a / 255.0f;
+	//float alpha_image = *(img + coordinate + 3) / 255.0f;
+	//float alpha_added = a / 255.0f;
 
 	if (channels == 4)
 	{
-		*(img + coordinate + 3) = (alpha_image + alpha_added*(1 - alpha_image))*255.0f; // alpha
+		//*(img + coordinate + 3) = (alpha_image + alpha_added*(1 - alpha_image))*255.0f; // alpha
+		//*(img + coordinate + 3) = (alpha_image + alpha_added*(1 - alpha_image))*255.0f;
+		*(img + coordinate + 3) = 255.0f;
+
 	}
 
-	*(img + coordinate) = min(alpha_image*(*(img + coordinate)) + (unsigned char)r*(1 - alpha_image), 255.0f); // red
-	*(img + coordinate + 1) = min(alpha_image*(*(img + coordinate + 1)) + (unsigned char)g*(1 - alpha_image), 255.0f); // green
-	*(img + coordinate + 2) = min(alpha_image*(*(img + coordinate + 2)) + (unsigned char)b*(1 - alpha_image), 255.0f); // blue
+	//*(img + coordinate) = min(alpha_image*(*(img + coordinate)) + (unsigned char)r*(1 - alpha_image), 255.0f); // red
+	//*(img + coordinate + 1) = min(alpha_image*(*(img + coordinate + 1)) + (unsigned char)g*(1 - alpha_image), 255.0f); // green
+	//*(img + coordinate + 2) = min(alpha_image*(*(img + coordinate + 2)) + (unsigned char)b*(1 - alpha_image), 255.0f); // blue
+	*(img + coordinate) = r;
+	*(img + coordinate + 1) = g;
+	*(img + coordinate + 2) = b;
 
-	for (int i = 0; i < 3; i++)
+
+	/*for (int i = 0; i < 3; i++)
 	{
 		*(img + coordinate + i) = min(*(img + coordinate + i)*1.0f, 255.0f);
-	}
+	}*/
 }
 
 // distance from xy to oxy
@@ -109,7 +118,7 @@ void add_disc(unsigned char *img, int channels,
 	}
 }
 
-
+//maybe add argument to add disc and only focusing on that part of the image for diff
 float diff(unsigned char *img, unsigned char*img2, int channels,
 	int img_width, int img_height)
 {
@@ -118,9 +127,11 @@ float diff(unsigned char *img, unsigned char*img2, int channels,
 	{
 		for (int y = 0; y < img_height; y++)
 		{
-			rgba col_a = get_pixel(img, channels, img_width, img_height, x, y);
-			rgba col_b = get_pixel(img2, channels, img_width, img_height, x, y);
-			float diff_now = fabs(col_a.r - col_b.r) / 255.0f + fabs(col_a.g - col_b.g) / 255.0f + fabs(col_a.b - col_b.b) / 255.0f + fabs(col_a.a - col_b.a) / 255.0f;
+			volatile rgba col_a = get_pixel(img, channels, img_width, img_height, x, y);
+			volatile rgba col_b = get_pixel(img2, channels, img_width, img_height, x, y);
+			//float diff_now = fabs(col_a.r - col_b.r) / 255.0f + fabs(col_a.g - col_b.g) / 255.0f + fabs(col_a.b - col_b.b) / 255.0f + fabs(col_a.a - col_b.a) / 255.0f;
+			volatile float diff_now = abs(col_a.r - col_b.r) + abs(col_a.g - col_b.g) + abs(col_a.b - col_b.b);
+
 			diff += diff_now;
 			//printf("(%d %d) %f\n", x, y, diff_now);
 		}
@@ -161,10 +172,10 @@ int main()
 	printf("Hill climbing algorithm version %s\n", ver);
 
 	//char* inputFilename = "C:\\Users\\Matz\\Desktop\\pd216-32.jpg";
-	char* inputFilename = "C:\\Users\\Matz\\Desktop\\Mona.png";
+	char* inputFilename = "C:\\Users\\Matz\\Desktop\\statue.png";
 	int template_width, template_height, template_channels;
 	int png_channels = 4;
-	int bpp = 8; // bits per pixel
+	int bpp = 1; // bits per pixel
 	unsigned char *img_template = (unsigned char *)stbi_load(inputFilename, &template_width, &template_height, &template_channels, 0);
 	unsigned char *img_tmp = (unsigned char*)calloc(template_width*template_height*png_channels*bpp, sizeof(unsigned char*));
 	unsigned char *img_out = (unsigned char*)calloc(template_width*template_height*png_channels*bpp, sizeof(unsigned char*));
@@ -180,57 +191,28 @@ int main()
 		exit(1);
 	}
 
-	/*
-	setbuf(stdout, NULL);
-	setbuf(stdin, NULL);
-	*/
-	// float d = diff(img_tmp, img_out, png_channels, template_width, template_height);
-
-	/*
-	polyElement pe;
-
-	pe.x = 50;
-	pe.y = 50;
-	pe.radius = 200;
-	pe.col.r = 255;
-	pe.col.g = 50;
-	pe.col.b = 5;
-
-	add_disc(img_tmp, png_channels,
-		template_width, template_height,
-		pe);
-
-	memcpy(img_out, img_tmp, template_width*template_width*png_channels*bpp* sizeof(unsigned char*));
-	stbi_write_png("C:\\Users\\Matz\\Desktop\\output2.png", template_width, template_height, png_channels, img_out, template_width * png_channels);
-
-	return 0;*/
-	//printf("Loaded image with a width of %dpx, a height of %dpx and %d channels\n", template_width, template_height, template_channels);
-
+	auto start = std::chrono::high_resolution_clock::now();
 	//todo: add as list of pe to output as svg
 	srand(time(NULL));
-
+	float difference_metric = 1000000000;
 	for (int i = 0; i < 500; i++) // add discs
 	{
 		polyElement pe_tmp;
 		polyElement pe_best;
 		pe_best.metric = 10000000000000;
-		//img_tmp = (unsigned char*)calloc(template_width*template_width*png_channels*bpp, sizeof(unsigned char*));
 
-		for (int j = 0; j < 100; j++) // test adding a disc
+
+		int alpha = min(rand() % 255, 255);
+
+		for (int j = 0; j < 1000; j++) // test adding a disc
 		{
-			// add disc to img2, calculate diff with img
-			// int x = j;
-			// int y = i;
-			int x = rand() % template_width;
-			int y = rand() % template_height;
-
-			int rad = 10 + rand() % 100;
-			/*int red = rand() % 255;
+			int rad = 3 + rand() % 70;
+			int red = rand() % 255;
 			int green = rand() % 255;
-			int blue = rand() % 255;*/
-			int red, green, blue;
-			red = green = blue = rand() % 255;
-			int alpha = min(10 + rand() % 255, 255);
+			int blue = rand() % 255;
+			int x = rad+rand() % (template_width-rad);
+			int y = rad+rand() % (template_height-rad);
+
 			pe_tmp.x = x;
 			pe_tmp.y = y;
 			pe_tmp.radius = rad;
@@ -245,21 +227,9 @@ int main()
 				template_width, template_height,
 				pe_tmp);
 
-			float difference_metric = diff(img_template, img_tmp, png_channels,
+			difference_metric = diff(img_template, img_tmp, png_channels,
 				template_width, template_height);
 
-			//img_diff = (unsigned char*)calloc(template_width*template_width*png_channels*bpp, sizeof(unsigned char*));
-			//memset(img_diff, 0, template_height*template_width*png_channels*bpp* sizeof(unsigned char*));
-			
-			/*memcpy(img_diff, img_empty, template_width*template_height*png_channels*bpp * sizeof(unsigned char*));
-			diff_images(img_template, img_tmp, img_diff, png_channels, template_width, template_height);
-			stbi_write_png("C:\\Users\\Matz\\Desktop\\img_diff.png", template_width, template_height, png_channels, img_diff, template_width * png_channels);
-*/
-
-			/*
-			*/
-
-			//printf("diff: %f\n", difference_metric);
 			memcpy(img_tmp, img_out, template_width*template_height*png_channels*bpp * sizeof(unsigned char*));
 
 			if (difference_metric < pe_best.metric) // better diff
@@ -274,6 +244,7 @@ int main()
 				pe_best.col.b = blue;
 				pe_best.col.a = alpha;
 				pe_best.metric = difference_metric;
+				//break;
 			}
 		}
 
@@ -286,10 +257,18 @@ int main()
 		printf("added disc: %d\n", i);
 
 		memcpy(img_tmp, img_out, template_height*template_width*png_channels*bpp * sizeof(unsigned char*));
-		stbi_write_png("C:\\Users\\Matz\\Desktop\\output3.png", template_width, template_height, png_channels, img_out, template_width * png_channels);
+		if (i % 10 == 0)
+		{
+			stbi_write_png("C:\\Users\\Matz\\Desktop\\output_tmp.png", template_width, template_height, png_channels, img_out, template_width * png_channels);
+		}
 		//stbi_write_png("C:\\Users\\Matz\\Desktop\\output_template_temp.png", template_width, template_height, png_channels, img_template, template_width * png_channels);
 
 	}
+
+	auto finish = std::chrono::high_resolution_clock::now();
+
+	std::chrono::duration<double> elapsed = finish - start;
+	std::cout << "Elapsed time: " << elapsed.count() << " s\n";
 
 	stbi_write_png("C:\\Users\\Matz\\Desktop\\output_new.png", template_width, template_height, png_channels, img_out, template_width * png_channels);
 
