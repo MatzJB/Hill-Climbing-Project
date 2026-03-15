@@ -407,7 +407,7 @@ int main()
             printf("Threads running: %d\n", omp_get_num_threads());
         }
     }
-
+    int ndiscs = 50000;
     int i = 0;
     char* ver = "0.0.4";
     printf("Hill climbing algorithm version %s\n", ver);
@@ -453,11 +453,15 @@ int main()
     float best_metric_global = 1e30;
     polyElement pe_tmp = polyElement();
     //diff_disc_opt is assuming monotonic increasing error, this is only the case if radii is fixed
-    std::uniform_int_distribution<int> rdist(10, 200);
+    std::uniform_int_distribution<int> rdist(5, 200);
+    
 
-
-    for (int i = 0; i < 3000; i++) // add discs
+    for (int i = ndiscs; i > 0; i--) // add discs
     {
+        int k = 5; // minimum radius
+        int radius = k + 200*(float(i) / float(ndiscs));
+        // radius decreases as we add more discs, start with big discs to get rough shape and then smaller discs to get details 
+
         polyElement pe_best = {};
 
 #pragma omp parallel
@@ -472,6 +476,7 @@ int main()
             std::uniform_int_distribution<int> ydist(0, template_height - 1);
             std::uniform_int_distribution<int> cdist(0, 254);
             std::uniform_int_distribution<int> adist(0, 254);
+            //radius = 5 + xdist(rng) + ydist(rng);
 
             //8.2 s
             //48 s with ompenmp
@@ -480,7 +485,7 @@ int main()
 #pragma omp for nowait
 
             // test just cycling colors
-            for (int j = 0; j < 3000; j++) // test adding a disc
+            for (int j = 0; j < 1000; j++) // test adding a disc
             {
                 /*x = random_int(0, template_width);
                 y = random_int(0, template_height);
@@ -509,8 +514,9 @@ int main()
                 pe_tmp.col.g = (unsigned char)cdist(rng);
                 pe_tmp.col.b = (unsigned char)cdist(rng);
                 pe_tmp.col.a = (unsigned char)adist(rng);
+                //pe_tmp.radius = rdist(rng);
+                pe_tmp.radius = radius;
 
-                pe_tmp.radius = rdist(rng);
 
 
                 // add disc to tmp to calculate if the added disc is better
@@ -539,11 +545,11 @@ int main()
             template_width, template_height,
             pe_best);
 
-        /*   if (i % 1000 == 0)
+           if (i % 100 == 0)
            {
                stbi_write_png("C:\\temp\\output_tmp.png", template_width, template_height,
                    png_channels, img_tmp, template_width * png_channels);
-           }*/
+           }
 
 
     }
