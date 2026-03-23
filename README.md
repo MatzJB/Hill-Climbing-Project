@@ -1,5 +1,20 @@
 # Hill-Climbing-Project
-Project using the Hill climbing algorithm to create automatic overlapping polygon art
+A simple C++ project implementing a Hill Climbing Algorithm using transparent discs.
+
+
+## How it works
+It creates a output image by placing transparent discs randomly
+for each disc it goes through k trials
+for each trial, a difference in RGB values between the input and the output + candidat disc is calculated
+
+
+## Optimizations
+OpenMP is used to parallelize the inner loop.
+
+## Suggestions
+Bail early if the diff is greater than previous diff values. The reason this works is because the diff is an monotonic increasing function.
+
+
 
 
 ## Renders
