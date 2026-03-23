@@ -6,6 +6,10 @@ A simple C++ project implementing a Hill Climbing Algorithm using transparent di
 It creates a output image by placing transparent discs randomly
 for each disc it goes through k trials
 for each trial, a difference in RGB values between the input and the output + candidat disc is calculated
+it picks the disc with least diff
+
+
+Note: in order to use diff for measurement of progress you need to randomize position, RGB and opacity, but keep radii the same, because it would give too much errors comparing a large disc with a smaller disc.
 
 
 ## Optimizations
