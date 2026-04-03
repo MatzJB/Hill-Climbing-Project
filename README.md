@@ -5,8 +5,9 @@ A simple C++ project implementing a Hill Climbing Algorithm using transparent di
 ## How it works
 It creates an output image (PNG) using m transparent discs to approximate the input image.
 ```
-for each disc it goes through $k$ trials
- for each trial, a disc if created with a new RGB value, position, opacity and radius, diff between input image and new image is calculated
+for each disc from 1 to m
+ for each disc there are k trials
+  a disc if created with a new RGB value, position, opacity and radius, diff between input image and new image is calculated
   it picks the disc which leads to the least diff in the trial run
 ```
 
@@ -14,22 +15,20 @@ for each disc it goes through $k$ trials
 OpenMP is used to parallelize the inner loop.
 
 ## Todo
-Bail early if the diff is greater than previous diff values. The reason this works is because the diff is an monotonic increasing function.
-Use ellipsoids.
-Store each disc element and prune if they do not contribute in the final image.
-Try to lower $k$ by gating the trials (totally random at first, pick best and then continue for a few iterations, only modifing position, I did this in Matlab and it seems to reduce the search space).
-Visualize error using a plot.
+* Bail early if the diff is greater than previous diff values. The reason this works is because the diff is an monotonic increasing function.
+* Use ellipsoids.
+* Store each disc element and prune if they do not contribute in the final image.
+* Try to lower $k$ by gating the trials (totally random at first, pick best and then continue for a few iterations, only modifing position, I did this in Matlab and it seems to reduce the search space).
+* Visualize error using a plot.
 
 
 
 ## Renders
-Each render was created using 50 000 transparent discs.
+Each render was created using m=50 000 transparent discs.
 Each disc is placed uniformly randomly.
 For these experiments I used:
 
- $x \in [0, templateWidth)$
- 
- $y \in [0, templateHeight)$
+ $x \in [0, templateWidth)$, $y \in [0, templateHeight)$
  
  $color RGB \in [20, 250)$
  
@@ -41,8 +40,6 @@ The following secions will show different trial number ($k$). The higher the $k$
 
 ### $k$=400
 
-<img width="500" alt="dots_hca" src="https://github.com/user-attachments/assets/eb10c95a-49e3-47ef-aba5-713f6c8b6074" />
-<img width="500" alt="tmp_output" src="https://github.com/user-attachments/assets/f53d1edf-16d6-4fb9-ab80-76f7477aa64b" />
 
 ### $k$=4000
 
