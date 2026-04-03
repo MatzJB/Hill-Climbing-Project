@@ -32,9 +32,9 @@ For each trial the randomized values are:
  
  $color RGB \in [20, 250)$
  
- $alpha \in [30, 250)$
+ $alpha \in [80, 80)$
  
- $radius \in [1, 90)$
+ $radius \in [1, 15)$
 
 The following secions will show different trial number ($k$). The higher the $k$, the more accurate the discs will be. However, if the radii of the disc is fixed, there is a limit to how accurate the resulting image can be, even if the discs are transparent.
 
@@ -56,8 +56,19 @@ Alpha 30, 80 and 120
 
 This test show that alpha should be fixed to 80.
 The following show number of discs 40 000 and 100 000.
-<img width="500" height="750" alt="David d 40000 k 10000 r 1 15 a 80" src="https://github.com/user-attachments/assets/6ba30f4e-e476-485b-a459-8ac5c96d0305" />
-<img width="500" height="750" alt="David d 100000 k 10000 r 0 5 15 a 80 c 0 255" src="https://github.com/user-attachments/assets/ce3ed561-8f9f-4950-8d30-a60d2d2776c7" />
+
+
+| d=100,000 | d=40,000 |
+| :---: | :---: |
+| <img width="500" height="750" alt="David d 40000 k 10000 r 1 15 a 80" src="https://github.com/user-attachments/assets/6ba30f4e-e476-485b-a459-8ac5c96d0305" /> | <img width="500" height="750" alt="David d 100000 k 10000 r 0 5 15 a 80 c 0 255" src="https://github.com/user-attachments/assets/ce3ed561-8f9f-4950-8d30-a60d2d2776c7" /> |
+
+
+
+
+d 20000 k 3000 r 1 15 a 80 t 53
+
+<img width="500" height="686" alt="Mona d 20000 k 3000 r 1 15 a 80 t 53 png" src="https://github.com/user-attachments/assets/62df4147-75f8-4b90-b1dc-648dadf6f286" />
+
 
 
 100 000 will capture details, in some cases 40 000 discs might be enough.
