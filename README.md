@@ -40,10 +40,25 @@ The following secions will show different trial number ($k$). The higher the $k$
 
 
 ### Original images
+<img width="500" height="750" alt="David" src="https://github.com/user-attachments/assets/85df9ae2-f81e-4b3b-ae0a-786e1d87a5c4" />
+<img width="500" height="686" alt="mona" src="https://github.com/user-attachments/assets/f5f07264-f76e-424c-8e91-fc5fcf5a1431" />
 
 
 ### $k$=400
 
 
-### $k$=4000
+### $k$=10000, 20000 discs
+Alpha 30, 80 and 120
+
+<img width="500" height="750" alt="David d 20000 k 10000 r 1 15 a 30" src="https://github.com/user-attachments/assets/6cd094c7-443e-4ac3-a33a-03c072bbdb04" />
+<img width="500" height="750" alt="David d 20000 k 10000 r 1 15 a 80" src="https://github.com/user-attachments/assets/52c856b6-d0f9-4903-845b-dc01c9cb538a" />
+<img width="500" height="750" alt="David d 20000 k 10000 r 1 15 a 120" src="https://github.com/user-attachments/assets/966f1f8d-5bd1-48b8-be7b-6a0ccc417d87" />
+
+This test show that alpha should be fixed to 80.
+The following show number of discs 40 000 and 100 000.
+<img width="500" height="750" alt="David d 40000 k 10000 r 1 15 a 80" src="https://github.com/user-attachments/assets/6ba30f4e-e476-485b-a459-8ac5c96d0305" />
+<img width="500" height="750" alt="David d 100000 k 10000 r 0 5 15 a 80 c 0 255" src="https://github.com/user-attachments/assets/ce3ed561-8f9f-4950-8d30-a60d2d2776c7" />
+
+
+40 000 discs are enough.
 
