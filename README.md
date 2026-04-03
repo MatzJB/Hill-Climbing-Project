@@ -24,10 +24,8 @@ OpenMP is used to parallelize the inner loop.
 
 
 ## Renders
-Each render was created using m=50 000 transparent discs.
-Each disc is placed uniformly randomly.
-For these experiments I used:
-
+Each render was created using m transparent discs and k trials for each disc.
+For each trial the randomized values are:
  $x \in [0, templateWidth)$, $y \in [0, templateHeight)$
  
  $color RGB \in [20, 250)$
@@ -38,11 +36,12 @@ For these experiments I used:
 
 The following secions will show different trial number ($k$). The higher the $k$, the more accurate the discs will be. However, if the radii of the disc is fixed, there is a limit to how accurate the resulting image can be, even if the discs are transparent.
 
+
+### Original images
+
+
 ### $k$=400
 
 
 ### $k$=4000
 
-<img width="750" height="1125" alt="tmp_output_3_50" src="https://github.com/user-attachments/assets/d896e174-a51a-48b6-8a80-bfc5cbe8316c" />
-<img width="740" height="740" alt="tmp_output" src="https://github.com/user-attachments/assets/08107bfc-fd8d-4b07-9dc0-a6916c6d08cb" />
-<img width="1094" height="1500" alt="Mona_5000_3" src="https://github.com/user-attachments/assets/4d25b3f7-7e36-42df-8a13-886e164e3915" />
