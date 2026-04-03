@@ -68,15 +68,7 @@ The following show number of discs 40 000 and 100 000.
 | <img width="500" height="750" alt="David d 40000 k 10000 r 1 15 a 80" src="https://github.com/user-attachments/assets/6ba30f4e-e476-485b-a459-8ac5c96d0305" /> | <img width="500" height="750" alt="David d 100000 k 10000 r 0 5 15 a 80 c 0 255" src="https://github.com/user-attachments/assets/ce3ed561-8f9f-4950-8d30-a60d2d2776c7" /> |
 
 
-
-
-d 20000 k 3000 r 1 15 a 80 t 53
-
-<img width="500" height="686" alt="Mona d 20000 k 3000 r 1 15 a 80 t 53 png" src="https://github.com/user-attachments/assets/62df4147-75f8-4b90-b1dc-648dadf6f286" />
-
-
-
-100 000 will capture details, in some cases 40 000 discs might be enough.
+Using d=100 000 will capture details, in some cases 40 000 discs might be enough.
 
 I am not interested in creating a new image compression scheme, it is just interesting to see how fan you can push it until it becomes indistinguishable from the original.
 
