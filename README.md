@@ -20,7 +20,7 @@ OpenMP is used to parallelize the inner loop.
 * Store each disc element and prune if they do not contribute in the final image.
 * Try to lower $k$ by gating the trials (totally random at first, pick best and then continue for a few iterations, only modifing position, I did this in Matlab and it seems to reduce the search space).
 * Visualize error using a plot.
-
+* Test if two discs overlapping will produce a better trial
 
 
 ## Renders
