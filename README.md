@@ -40,11 +40,16 @@ The following secions will show different trial number ($k$). The higher the $k$
 
 
 ### Original images
-<img  height="600" alt="David" src="https://github.com/user-attachments/assets/85df9ae2-f81e-4b3b-ae0a-786e1d87a5c4" />
-<img  height="600" alt="mona" src="https://github.com/user-attachments/assets/f5f07264-f76e-424c-8e91-fc5fcf5a1431" />
+
+| ![mona](https://github.com/user-attachments/assets/f5f07264-f76e-424c-8e91-fc5fcf5a1431) |
+|:--:|
+| *Mona Lisa* |
 
 
-### $k$=400
+| ![david](https://github.com/user-attachments/assets/85df9ae2-f81e-4b3b-ae0a-786e1d87a5c4) |
+|:--:|
+| *David* |
+
 
 
 ### $k$=10000, 20000 discs
