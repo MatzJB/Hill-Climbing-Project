@@ -40,8 +40,8 @@ The following secions will show different trial number ($k$). The higher the $k$
 
 
 ### Original images
-<img width="500" height="750" alt="David" src="https://github.com/user-attachments/assets/85df9ae2-f81e-4b3b-ae0a-786e1d87a5c4" />
-<img width="500" height="686" alt="mona" src="https://github.com/user-attachments/assets/f5f07264-f76e-424c-8e91-fc5fcf5a1431" />
+<img  height="600" alt="David" src="https://github.com/user-attachments/assets/85df9ae2-f81e-4b3b-ae0a-786e1d87a5c4" />
+<img  height="600" alt="mona" src="https://github.com/user-attachments/assets/f5f07264-f76e-424c-8e91-fc5fcf5a1431" />
 
 
 ### $k$=400
@@ -60,5 +60,12 @@ The following show number of discs 40 000 and 100 000.
 <img width="500" height="750" alt="David d 100000 k 10000 r 0 5 15 a 80 c 0 255" src="https://github.com/user-attachments/assets/ce3ed561-8f9f-4950-8d30-a60d2d2776c7" />
 
 
-40 000 discs are enough.
+100 000 will capture details, in some cases 40 000 discs might be enough.
+
+I am not interested in creating a new image compression scheme, it is just interesting to see how fan you can push it until it becomes indistinguishable from the original.
+
+## Compression
+An image of size 500x750 contains 375 000 pixels. Each pixel is stored as RGB values.
+
+
 
