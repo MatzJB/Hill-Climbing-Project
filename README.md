@@ -25,6 +25,8 @@ OpenMP is used to parallelize the inner loop.
 
 ## Renders
 Each render was created using m transparent discs and k trials for each disc.
+I have experimented with alpha/opacity to make the search space smaller and I believe that making it very narow toward opaque may be better compared to relying on overlapping transarent discs to produce shaded areas. Given a high enough k.
+
 For each trial the randomized values are:
  $x \in [0, templateWidth)$, $y \in [0, templateHeight)$
  
