@@ -91,7 +91,7 @@ OpenMP is used to parallelize the inner loop of the algorithm on the CPU. Additi
 
 
 ## Todo
-* Store each disc element and prune if they do not contribute in the final image.
+* Store each disc element in a list and prune if they do not contribute in the final image.
 * Try to lower $k$ by gating the trials (totally random at first, pick best and then continue for a few iterations, only modifing position, I did this in Matlab and it seems to reduce the search space).
 * Visualize error using a plot.
 
