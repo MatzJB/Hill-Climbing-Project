@@ -22,11 +22,7 @@ I have experimented with alpha/opacity to make the search space smaller and I be
 For each trial the randomized values are:
  $x \in [0, templateWidth)$, $y \in [0, templateHeight)$
  
- $color RGB \in [20, 250)$
- 
- $alpha \in [80, 80)$
- 
- $radius \in [1, 15)$
+ $color RGB \in [20, 250)$, $alpha \in [80, 80)$, $radius \in [1, 15)$
 
 The following secions will show different trial number ($k$). The higher the $k$, the more accurate the discs will be. However, if the radii of the disc is fixed, there is a limit to how accurate the resulting image can be, even if the discs are transparent.
 
