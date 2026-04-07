@@ -1,12 +1,11 @@
 # Hill-Climbing-Project
-A simple C++ project implementing a Hill Climbing Algorithm using transparent discs.
+This project shows some experiments with a simple Hill Climbing Algorithm (transparent discs) implemented in C++ (OpenMP) and CUDA.
 
 <img width="500" height="750" alt="David d 20000 k 10000 r 1 15 a 255" src="https://github.com/user-attachments/assets/0b79efc5-07ed-4e3c-b7b4-78ab33872754" />
 
 
-
 ## How it works
-It creates an output image (PNG) using m transparent discs to approximate the input image.
+It creates an output image (PNG) using $d$ transparent discs to approximate the input image.
 ```
 for each disc from 1 to m
  for each disc there are k trials
@@ -79,4 +78,20 @@ This test show that alpha should be fixed to 80.
 | <img width="500" height="750" alt="David d 40000 k 10000 r 1 15 a 80" src="https://github.com/user-attachments/assets/6ba30f4e-e476-485b-a459-8ac5c96d0305" /> | <img width="500" height="750" alt="David d 100000 k 10000 r 0 5 15 a 80 c 0 255" src="https://github.com/user-attachments/assets/ce3ed561-8f9f-4950-8d30-a60d2d2776c7" /> |
 
 Using d=100 000 will capture the small details because as you increase the number of discs the smaller features are the only ones making a difference.
+
+
+## Other shapes
+
+### Manhattan distance
+
+### Squares
+
+### Ellipsoids
+
+
+## Taking it to the GPU
+
+
+
+
 
