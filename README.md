@@ -1,6 +1,9 @@
 # Hill-Climbing-Project
 A simple C++ project implementing a Hill Climbing Algorithm using transparent discs.
 
+<img width="500" height="750" alt="David d 20000 k 10000 r 1 15 a 255" src="https://github.com/user-attachments/assets/0b79efc5-07ed-4e3c-b7b4-78ab33872754" />
+
+
 
 ## How it works
 It creates an output image (PNG) using m transparent discs to approximate the input image.
@@ -50,6 +53,15 @@ The following secions will show different trial number ($k$). The higher the $k$
 |:--:|
 | *David* |
 
+## Building the images
+
+...
+
+
+## Compression idea
+Even though this project is all about creating art, if you increase the numbere of discs, trials and decrease the size of the radii, the resulting image will start to look more like the original image.
+For instance a 500x750 pixel image contains a total of 375 000 pixels, if we only used radius=1 we would need that many discs, however using only 100 000 discs we can approximate the original image surprisingly well.
+
 
 
 ### $k$=10000, 20000 discs
@@ -60,20 +72,11 @@ Alpha 30, 80 and 120
 <img width="500" height="750" alt="David d 20000 k 10000 r 1 15 a 120" src="https://github.com/user-attachments/assets/966f1f8d-5bd1-48b8-be7b-6a0ccc417d87" />
 
 This test show that alpha should be fixed to 80.
-The following show number of discs 40 000 and 100 000.
 
 
 | d=100,000 | d=40,000 |
 | :---: | :---: |
 | <img width="500" height="750" alt="David d 40000 k 10000 r 1 15 a 80" src="https://github.com/user-attachments/assets/6ba30f4e-e476-485b-a459-8ac5c96d0305" /> | <img width="500" height="750" alt="David d 100000 k 10000 r 0 5 15 a 80 c 0 255" src="https://github.com/user-attachments/assets/ce3ed561-8f9f-4950-8d30-a60d2d2776c7" /> |
 
-
-Using d=100 000 will capture details, in some cases 40 000 discs might be enough.
-
-I am not interested in creating a new image compression scheme, it is just interesting to see how fan you can push it until it becomes indistinguishable from the original.
-
-## Compression
-An image of size 500x750 contains 375 000 pixels. Each pixel is stored as RGB values.
-
-
+Using d=100 000 will capture the small details because as you increase the number of discs the smaller features are the only ones making a difference.
 
