@@ -13,16 +13,6 @@ for each disc from 1 to m
   it picks the disc which leads to the least diff in the trial run
 ```
 
-## Optimizations
-OpenMP is used to parallelize the inner loop.
-
-## Todo
-* Bail early if the diff is greater than previous diff values. The reason this works is because the diff is an monotonic increasing function.
-* Use ellipsoids.
-* Store each disc element and prune if they do not contribute in the final image.
-* Try to lower $k$ by gating the trials (totally random at first, pick best and then continue for a few iterations, only modifing position, I did this in Matlab and it seems to reduce the search space).
-* Visualize error using a plot.
-* Test if two discs overlapping will produce a better trial
 
 
 ## Renders
@@ -89,9 +79,21 @@ Using d=100 000 will capture the small details because as you increase the numbe
 ### Ellipsoids
 
 
+## Optimizations
+OpenMP is used to parallelize the inner loop of the algorithm on the CPU.
+
+## Todo
+* Store each disc element and prune if they do not contribute in the final image.
+* Try to lower $k$ by gating the trials (totally random at first, pick best and then continue for a few iterations, only modifing position, I did this in Matlab and it seems to reduce the search space).
+* Visualize error using a plot.
+
+
+
 ## Taking it to the GPU
 
-
+This will happen soon as the problem is embarassingly parallel, so it would lend itself perfectly to be run on the GPU using CUDA.
+A switch of CPU, GPU and hybrid version will be available.
+GPU: RTX 4070
 
 
 
