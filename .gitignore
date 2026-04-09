@@ -1,0 +1,33 @@
+# CMake build directories
+build/
+cmake-build*/
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+Makefile
+cmake_install.cmake
+
+# C++ compiled objects
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.a
+*.lib
+*.exe
+*.out
+
+# Debug / profiling
+*.dSYM/
+*.gcno
+*.gcda
+*.gcov
+
+# IDE
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db
