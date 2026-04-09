@@ -85,10 +85,21 @@ struct RmsePlot {
             ImGui::SetNextWindowSize({ (float)W, (float)H });
             ImGui::Begin(plotTitle.c_str(), nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoResize);
 
-            if (ImPlot::BeginPlot("##rmse", { -1, -1 })) {
+            if (ImPlot::BeginPlot(plotTitle.c_str(), { -1, -1 })) {
                 ImPlot::SetupAxes("Iteration", "RMSE", ImPlotAxisFlags_AutoFit, ImPlotAxisFlags_AutoFit);
+                ImPlot::SetupAxisScale(ImAxis_Y1, ImPlotScale_Log10);  // log scale
                 ImPlot::SetNextLineStyle(ImVec4(1, 1, 1, 1), 2.0f);
                 ImPlot::PlotLine("RMSE", localIter.data(), localHistory.data(), (int)localHistory.size());
+
+                // show last value as annotation
+                if (!localHistory.empty()) {
+                    float lastIter = localIter.back();
+                    float lastRmse = localHistory.back();
+                    char label[32];
+                    snprintf(label, sizeof(label), "%.2f", lastRmse);
+                    ImPlot::Annotation(lastIter, lastRmse, ImVec4(1, 1, 0, 1), ImVec2(10, -10), true, label);
+                }
+
                 ImPlot::EndPlot();
             }
 
