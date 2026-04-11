@@ -9,8 +9,10 @@
 #include <mutex>
 #include <atomic>
 #include <string>
+#include "IPlot.h"
 
-struct RmsePlot {
+struct RmsePlot : public IPlot 
+{
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
     std::vector<float> rmseHistory;
@@ -132,9 +134,10 @@ struct RmsePlot {
         SDL_Quit();
     }
 
-    void destroy() {
-        running = false;
-        if (renderThread.joinable())
-            renderThread.join();
+    void shutdown() override {
+      running = false;
+      if (renderThread.joinable())
+        renderThread.join();
     }
+
 };

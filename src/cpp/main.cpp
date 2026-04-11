@@ -24,6 +24,7 @@
 #include <string>
 #include <thread>
 
+#include "IPlot.h"
 #include "rmse_plot.h"
 
 using namespace std;
@@ -55,6 +56,7 @@ struct HCAParameters {
   Shape shape;
   float RMSError;
   string filename;
+  double time;
 
   string toString() const {
     return "d " + to_string(d) + " k " + to_string(k) + " shape " +
@@ -67,25 +69,48 @@ struct HCAParameters {
 
 void writeResultsByFile(const std::vector<HCAParameters> &params) {
   string filename = params[0].filename;
-  // build output filename from input filename
   std::string outFile = filename;
   size_t pos = outFile.find(".png");
   if (pos != std::string::npos)
     outFile.replace(pos, 4, "_results.csv");
 
-  FILE *f = fopen(outFile.c_str(), "w");
+  std::string tmpFile = outFile + ".tmp";
 
-  fprintf(
-      f,
-      "d,k,alphaMin,alphaMax,radiusMin,radiusMax,colorMin,colorMax,RMSError\n");
+  FILE *f = fopen(tmpFile.c_str(), "w");
+  if (!f) {
+    printf("Warning: could not write to %s\n", tmpFile.c_str());
+    return;
+  }
 
+  fprintf(f, "d,k,alphaMin,alphaMax,radiusMin,radiusMax,colorMin,colorMax,"
+             "RMSError,time\n");
   for (const auto &p : params) {
-    fprintf(f, "%d,%d,%d,%d,%.4f,%.4f,%d,%d,%.6f\n", p.d, p.k,
+
+    fprintf(f, "%d,%d,%d,%d,%.4f,%.4f,%d,%d,%.6f,%.2f\n", p.d, p.k,
             get<0>(p.alphaRange), get<1>(p.alphaRange), get<0>(p.radiusRange),
             get<1>(p.radiusRange), get<0>(p.colorRange), get<1>(p.colorRange),
-            p.RMSError);
+            p.RMSError, p.time);
+
+    /*fprintf(f, "%d,%d,%d,%d,%.4f,%.4f,%d,%d,%.6f\n", p.d, p.k,
+            get<0>(p.alphaRange), get<1>(p.alphaRange), get<0>(p.radiusRange),
+            get<1>(p.radiusRange), get<0>(p.colorRange), get<1>(p.colorRange),
+            p.RMSError);*/
   }
   fclose(f);
+
+  // rename temp to target - will fail if target is locked
+  if (std::filesystem::exists(outFile))
+    std::filesystem::remove(outFile);
+
+  std::error_code ec;
+  std::filesystem::rename(tmpFile, outFile, ec);
+  if (ec) {
+    printf("Warning: could not replace %s (file may be open). Temp file saved "
+           "as %s\n",
+           outFile.c_str(), tmpFile.c_str());
+  } else {
+    printf("Results written to %s\n", outFile.c_str());
+  }
 }
 
 // TO DO: change to putPixel
@@ -107,6 +132,7 @@ void add_pixel(unsigned char *img, int channels, int img_width, int img_height,
 float distance(int x, int y, int ox, int oy) {
   return sqrt(pow(x - ox, 2.0f) + pow(y - oy, 2.0f));
 }
+// TODO: change to putShape
 void add_disc(unsigned char *img, int channels, int img_width, int img_height,
               polyElement pe) {
   const int x = pe.x;
@@ -155,9 +181,11 @@ void add_disc(unsigned char *img, int channels, int img_width, int img_height,
   }
 }
 
+// TODO: change to putShapeDiffOPT
 float add_disc_diff_opt(unsigned char *img_in, unsigned char *img_buff,
                         int channels, polyElement pe_tmp, int width,
                         int height) {
+  // TODO add Shape::Disc
   float diff = 0.0f;
 
   const int cx = pe_tmp.x;
@@ -239,7 +267,7 @@ float computeRMSE(unsigned char *img_in, unsigned char *img_buff, int width,
   return sqrt(sse / n);
 }
 
-void render(HCAParameters &p, bool doPlot) {
+void render(HCAParameters &p, IPlot *plot = nullptr) {
   char inputFilename[256];
   int ndiscs = p.d;
   int k = p.k;
@@ -257,11 +285,8 @@ void render(HCAParameters &p, bool doPlot) {
   std::string lower = inputFilename;
   std::transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
 
-  RmsePlot plot;
-
-  if (doPlot) {
-    plot.init(p.filename);
-  }
+  if (plot)
+    plot->init(p.filename);
 
   char outputName[256];
 
@@ -279,8 +304,6 @@ void render(HCAParameters &p, bool doPlot) {
   if (img_template == NULL) {
     throw exception("Error in loading the image");
   }
-  // printf("width: %d height: %d channels: %d\n", template_width,
-  // template_height, png_channels);
   unsigned char *img_tmp = (unsigned char *)calloc(
       template_width * template_height * png_channels * bpp,
       sizeof(unsigned char));
@@ -297,7 +320,7 @@ void render(HCAParameters &p, bool doPlot) {
   std::uniform_int_distribution<int> ydist(0, template_height - 1);
   template_channels = 4; // force 4 channels for output and calculations,
                          // ignore alpha in template if it exists
-  printf("template channels: %d\n", template_channels);
+  // printf("template channels: %d\n", template_channels);
 
   if (template_width * template_height * png_channels * bpp > INT_MAX) {
     throw exception("Image is too large");
@@ -366,28 +389,32 @@ void render(HCAParameters &p, bool doPlot) {
 
       add_disc(img_tmp, png_channels, template_width, template_height, pe_best);
 
-      if (doPlot) {
-        if (i % (ndiscs / 100) == 0) {
-          float currentRmse = computeRMSE(img_tmp, img_template, template_width,
-                                          template_height, template_channels);
-          plot.push(currentRmse, ndiscs - i);
-          p.RMSError = currentRmse; // yes, we overwrite
+      if (i % (ndiscs / 100) == 0) {
+        float currentRmse = computeRMSE(img_tmp, img_template, template_width,
+                                        template_height, template_channels);
+        p.RMSError = currentRmse;
+
+        if (plot) {
+
+          if (plot)
+            plot->push(currentRmse, ndiscs - i);
         }
       }
     }
   });
   computeThread.join();
 
-  if (doPlot) {
-    plot.savePNG(outputFilename + "_rmse.png");
-    plot.running = false;
-    plot.destroy();
+  if (plot) {
+    plot->savePNG(outputFilename + "_rmse.png");
+    plot->shutdown();
   }
 
   auto finish = std::chrono::high_resolution_clock::now();
 
   std::chrono::duration<double> elapsed = finish - start;
   std::cout << "Elapsed time: " << elapsed.count() << " s\n";
+
+  p.time = elapsed.count();
 
   stbi_write_png(outputFilenameCStr, template_width, template_height,
                  png_channels, img_tmp, template_width * png_channels);
@@ -397,68 +424,73 @@ void render(HCAParameters &p, bool doPlot) {
 }
 
 int main(int argc, char *argv[]) {
-  const char *ver = "0.0.12";
-  string path = "C:\\temp\\";
+  const char *ver = "0.0.15";
+  string path = "C:\\temp\\images\\";
 
   // vector<HCAParameters> params;
-  std::vector<std::string> names = {"Mona", "David"}; //, "mario", "geo_shapes"
+  std::vector<std::string> names = {"dots"}; //, "Mona", "mario", "geo_shapes"
 
   // std::map<std::string, HCAParameters> testData;
   std::map<std::string, std::vector<HCAParameters>> testData;
 
-  tuple<int, int> alphaRange = {80, 80};       // recommended: 80, 80
+  tuple<int, int> alphaRange = {70, 80};       // recommended: 80, 80
   tuple<float, float> radiusRange = {0.5, 20}; // recommended: 0.5, 20
   tuple<int, int> colorRange = {0, 255};
   Shape shape = Shape::Disc;
   string filename;
   HCAParameters parameter = {};
 
-  for (const auto &name : names) 
-  {
+  for (const auto &name : names) {
     string inputFilename = path + name + ".png";
-    if (!std::filesystem::exists(inputFilename)) 
-    {
-      throw std::runtime_error("File " + inputFilename + "not found");
+    if (!std::filesystem::exists(inputFilename)) {
+      printf("File '%s' not found", inputFilename.c_str());
+      std::cin.get();
+      return -1;
     }
+    for (int alphaMin : {60, 80, 100}) {
 
-    for (int i = 1; i < 4; i++) 
-    {
-      for (int j : {100, 1000, 2000}) 
-      {
-        parameter = {.d = 10000 * i,
-                     .k = j,
-                     .alphaRange = alphaRange,
-                     .radiusRange = radiusRange,
-                     .colorRange = colorRange,
-                     .shape = Shape::Disc,
-                     .filename = inputFilename};
+      for (int alphaMax = alphaMin; alphaMax < 100; alphaMax += 20) {
+        for (int radiusMax : {20, 40, 60}) {
+          for (int d : {1000, 10000, 20000, 100000}) { // #shapes
+            for (int k : {100, 1000, 4000}) {   // #trials
+              parameter = {.d = d,
+                           .k = k,
+                           .alphaRange = {alphaMin, alphaMax},
+                           .radiusRange = {get<0>(radiusRange), radiusMax},
+                           .colorRange = colorRange,
+                           .shape = Shape::Disc,
+                           .filename = inputFilename};
+
+              testData[name].push_back(parameter);
+            }
+          }
+        }
       }
     }
-    testData[name].push_back(parameter);
-    // testData[name] = parameter;
   }
 
   printf("Hill Climber: %s\n", ver);
-  // printf("Threads running: %d\n", omp_get_num_threads());
-  printf("Generated %zu parameter sets\n", testData.size());
+  size_t total = 0;
+  for (const auto &[key, params] : testData)
+    total += params.size();
+
+  printf("Total parameter sets: %zu\n", total);
 
   int nThreads = max(1, omp_get_max_threads() - 1);
   omp_set_num_threads(nThreads);
   printf("Threads: %d\n", nThreads);
 
-  for (auto &[key, params] : testData) 
-  {
-    for (auto &p : params) 
-    {
-      p.RMSError = 0.0f;
-      printf("Processing image: %s\n", p.filename.c_str());
+  RmsePlot plot;
+
+  for (auto &[key, params] : testData) {
+    printf("Processing image: %s\n", key.c_str());
+    for (auto &p : params) {
       printf("Running with parameters: %s\n", p.toString().c_str());
-      render(p, true);
+      render(p, nullptr);
     }
   }
 
-  for (auto &[key, params] : testData) 
-  {
+  for (auto &[key, params] : testData) {
     writeResultsByFile(params);
   }
 
