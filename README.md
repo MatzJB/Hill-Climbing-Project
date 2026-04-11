@@ -48,7 +48,7 @@ For this experiment I used a dots sample image.
 
 
 
-![Diagram](assets/HCA RMS time radius.svg)
+![Diagram](assets/"HCA RMS time radius.svg")
 
 
 | ![david](https://github.com/user-attachments/assets/85df9ae2-f81e-4b3b-ae0a-786e1d87a5c4) |
