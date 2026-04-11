@@ -3,7 +3,6 @@
 # Hill-Climbing-Project
 This project shows some experiments with a simple Hill Climbing Algorithm (transparent discs) implemented in C++ (OpenMP) and CUDA.
 
-<img width="500" height="750" alt="David d 20000 k 10000 r 1 15 a 255" src="https://github.com/user-attachments/assets/0b79efc5-07ed-4e3c-b7b4-78ab33872754" />
 
 
 ## How it works
@@ -42,13 +41,20 @@ For this experiment I used a dots sample image.
 <img width="474" height="338" alt="dots d 1000 k 100 shape 1 alpha 60-60 radius 0 50-20 00" src="https://github.com/user-attachments/assets/f3ed12e5-059f-4ed5-9834-b550b6f2da83" />
 
 
-
-<img width="474" height="338" alt="dots" src="https://github.com/user-attachments/assets/088e4b99-7782-460d-b707-f35a5aac03d0" />
 <img width="474" height="338" alt="dots d 20000 k 1000 shape 1 alpha 60-80 radius 0 50-20 00" src="https://github.com/user-attachments/assets/b174b891-ed1d-474e-91ca-6c2a6675cd79" />
 
+| ![dots](https://github.com/user-attachments/assets/088e4b99-7782-460d-b707-f35a5aac03d0) |
+|:--:|
+| dots |
 
 
-![Diagram](assets/"HCA RMS time radius.svg")
+| ![image1](https://github.com/user-attachments/assets/088e4b99-7782-460d-b707-f35a5aac03d0) | ![image2](https://github.com/user-attachments/assets/f3ed12e5-059f-4ed5-9834-b550b6f2da83)) | ![image3](https://github.com/user-attachments/assets/b174b891-ed1d-474e-91ca-6c2a6675cd79) 
+|:--:|:--:|:--:|
+| caption1 | caption2 | caption3 |
+
+
+
+![Diagram](./assets/"HCA RMS time radius.svg")
 
 
 | ![david](https://github.com/user-attachments/assets/85df9ae2-f81e-4b3b-ae0a-786e1d87a5c4) |
