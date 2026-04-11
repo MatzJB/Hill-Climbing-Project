@@ -1,3 +1,5 @@
+![Uploading HCA RMS time radius.svg…]()
+![Uploading HCA RMS time radius.svg…]()
 # Hill-Climbing-Project
 This project shows some experiments with a simple Hill Climbing Algorithm (transparent discs) implemented in C++ (OpenMP) and CUDA.
 
@@ -35,12 +37,18 @@ The following secions will show different trial number ($k$). The higher the $k$
 
 
 ### Original images
-Introducing Leonardo Da Vincis Mona Lisa and Michelangelo's David.
+For this experiment I used a dots sample image.
+
+<img width="474" height="338" alt="dots d 1000 k 100 shape 1 alpha 60-60 radius 0 50-20 00" src="https://github.com/user-attachments/assets/f3ed12e5-059f-4ed5-9834-b550b6f2da83" />
 
 
-| ![mona](https://github.com/user-attachments/assets/f5f07264-f76e-424c-8e91-fc5fcf5a1431) |
-|:--:|
-| *Mona Lisa* https://en.wikipedia.org/wiki/Mona_Lisa|
+
+<img width="474" height="338" alt="dots" src="https://github.com/user-attachments/assets/088e4b99-7782-460d-b707-f35a5aac03d0" />
+<img width="474" height="338" alt="dots d 20000 k 1000 shape 1 alpha 60-80 radius 0 50-20 00" src="https://github.com/user-attachments/assets/b174b891-ed1d-474e-91ca-6c2a6675cd79" />
+
+
+
+![Diagram](assets/HCA RMS time radius.svg)
 
 
 | ![david](https://github.com/user-attachments/assets/85df9ae2-f81e-4b3b-ae0a-786e1d87a5c4) |
