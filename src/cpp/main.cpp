@@ -67,8 +67,8 @@ struct HCAParameters {
   }
 };
 
-void writeResultsByFile(const std::vector<HCAParameters> &params) {
-  string filename = params[0].filename;
+void writeResultsByFile(const HCAParameters &p) {
+  string filename = p.filename;
   std::string outFile = filename;
   size_t pos = outFile.find(".png");
   if (pos != std::string::npos)
@@ -84,18 +84,12 @@ void writeResultsByFile(const std::vector<HCAParameters> &params) {
 
   fprintf(f, "d,k,alphaMin,alphaMax,radiusMin,radiusMax,colorMin,colorMax,"
              "RMSError,time\n");
-  for (const auto &p : params) {
 
-    fprintf(f, "%d,%d,%d,%d,%.4f,%.4f,%d,%d,%.6f,%.2f\n", p.d, p.k,
-            get<0>(p.alphaRange), get<1>(p.alphaRange), get<0>(p.radiusRange),
-            get<1>(p.radiusRange), get<0>(p.colorRange), get<1>(p.colorRange),
-            p.RMSError, p.time);
+  fprintf(f, "%d,%d,%d,%d,%.4f,%.4f,%d,%d,%.6f,%.2f\n", p.d, p.k,
+          get<0>(p.alphaRange), get<1>(p.alphaRange), get<0>(p.radiusRange),
+          get<1>(p.radiusRange), get<0>(p.colorRange), get<1>(p.colorRange),
+          p.RMSError, p.time);
 
-    /*fprintf(f, "%d,%d,%d,%d,%.4f,%.4f,%d,%d,%.6f\n", p.d, p.k,
-            get<0>(p.alphaRange), get<1>(p.alphaRange), get<0>(p.radiusRange),
-            get<1>(p.radiusRange), get<0>(p.colorRange), get<1>(p.colorRange),
-            p.RMSError);*/
-  }
   fclose(f);
 
   // rename temp to target - will fail if target is locked
@@ -113,27 +107,11 @@ void writeResultsByFile(const std::vector<HCAParameters> &params) {
   }
 }
 
-// TO DO: change to putPixel
-void add_pixel(unsigned char *img, int channels, int img_width, int img_height,
-               int x, int y, int r, int g, int b, int a) {
-  int coordinate = (x + img_width * y) * channels;
-  float an = a / 255.0f;
-  float inv_an = 1.0f - an;
-
-  // buffer is always opaque � no need to read or write alpha channel
-  *(img + coordinate) = (unsigned char)(*(img + coordinate) * inv_an + r * an);
-  *(img + coordinate + 1) =
-      (unsigned char)(*(img + coordinate + 1) * inv_an + g * an);
-  *(img + coordinate + 2) =
-      (unsigned char)(*(img + coordinate + 2) * inv_an + b * an);
-  // leave channel 3 alone - always 255
-}
-
 float distance(int x, int y, int ox, int oy) {
   return sqrt(pow(x - ox, 2.0f) + pow(y - oy, 2.0f));
 }
-// TODO: change to putShape
-void add_disc(unsigned char *img, int channels, int img_width, int img_height,
+
+void putShape(unsigned char *img, int channels, int img_width, int img_height,
               polyElement pe) {
   const int x = pe.x;
   const int y = pe.y;
@@ -145,6 +123,8 @@ void add_disc(unsigned char *img, int channels, int img_width, int img_height,
       if (i < 0 || i >= img_width || j < 0 || j >= img_height)
         continue;
 
+      if (pe.shape != Shape::Disc) {
+      }
       const int dx = i - x;
       const int dy = j - y;
       const int d2 = dx * dx + dy * dy;
@@ -153,20 +133,6 @@ void add_disc(unsigned char *img, int channels, int img_width, int img_height,
         continue;
 
       const float t = (float)d2 / (float)radius2;
-      // const float falloff = 1.0f - t;
-      // const float falloff = expf(-4.0f * t);
-      // const float falloff = 0.5f * (1.0f + cosf(t * 3.14159f));
-
-      /*  const float sinc_arg = t * 3.14159f;
-        const float falloff = (t < 1e-6f) ? 1.0f : sinf(sinc_arg) / sinc_arg;
-        const float an = (pe.col.a / 255.0f) * falloff;
-        const float inv_an = 1.0f - an;*/
-
-      /*   const float lobes = 3.0f;
-         const float sinc_arg = t * lobes * 3.14159f;
-         const float falloff = (t < 1e-6f) ? 1.0f : sinf(sinc_arg) / sinc_arg;
-         const float an = (pe.col.a / 255.0f) * falloff;
-         const float inv_an = 1.0f - an;*/
       float falloff = 1.0f;
       const float an = (pe.col.a / 255.0f) * falloff;
       const float inv_an = 1.0f - an;
@@ -182,9 +148,8 @@ void add_disc(unsigned char *img, int channels, int img_width, int img_height,
 }
 
 // TODO: change to putShapeDiffOPT
-float add_disc_diff_opt(unsigned char *img_in, unsigned char *img_buff,
-                        int channels, polyElement pe_tmp, int width,
-                        int height) {
+float putShapeDiffOPT(unsigned char *img_in, unsigned char *img_buff,
+                      int channels, polyElement pe_tmp, int width, int height) {
   // TODO add Shape::Disc
   float diff = 0.0f;
 
@@ -217,11 +182,6 @@ float add_disc_diff_opt(unsigned char *img_in, unsigned char *img_buff,
         continue;
 
       const float t = (float)d2 / (float)radius2;
-
-      // experiment with lobes of sinc
-      /*const float lobes = 3.0f;
-      const float sinc_arg = t * lobes * 3.14159f;
-      const float falloff = (t < 1e-6f) ? 1.0f : sinf(sinc_arg) / sinc_arg;*/
       float falloff = 1.0f;
       const float an = (pe_tmp.col.a / 255.0f) * falloff;
       const float inv_an = 1.0f - an;
@@ -288,8 +248,6 @@ void render(HCAParameters &p, IPlot *plot = nullptr) {
   if (plot)
     plot->init(p.filename);
 
-  char outputName[256];
-
   std::string outputFilename = lower;
   size_t pos = outputFilename.find(".png");
   if (pos != std::string::npos)
@@ -311,16 +269,9 @@ void render(HCAParameters &p, IPlot *plot = nullptr) {
       template_width * template_height * png_channels * bpp,
       sizeof(unsigned char));
 
-  // stbi_uc* img_tmp = (stbi_uc*) calloc(template_width * template_height *
-  // png_channels * bpp, sizeof(unsigned char)); stbi_uc* img_out = (stbi_uc*)
-  // calloc(template_width * template_height * png_channels * bpp,
-  // sizeof(unsigned char));
-
   std::uniform_int_distribution<int> xdist(0, template_width - 1);
   std::uniform_int_distribution<int> ydist(0, template_height - 1);
-  template_channels = 4; // force 4 channels for output and calculations,
-                         // ignore alpha in template if it exists
-  // printf("template channels: %d\n", template_channels);
+  template_channels = 4;
 
   if (template_width * template_height * png_channels * bpp > INT_MAX) {
     throw exception("Image is too large");
@@ -331,6 +282,7 @@ void render(HCAParameters &p, IPlot *plot = nullptr) {
   float difference_metric = 1e30;
 
   memset(img_tmp, 255, template_width * template_height * 4);
+
   int x, y;
   int red, green, blue;
   float radius;
@@ -371,8 +323,8 @@ void render(HCAParameters &p, IPlot *plot = nullptr) {
           pe_tmp.col.a = (unsigned char)adist(rng);
           pe_tmp.radii.x = rdist(rng);
           pe_tmp.metric =
-              add_disc_diff_opt(img_template, img_tmp, template_channels,
-                                pe_tmp, template_width, template_height);
+              putShapeDiffOPT(img_template, img_tmp, template_channels, pe_tmp,
+                              template_width, template_height);
 
           if (pe_tmp.metric < pe_best_local.metric) {
             pe_best_local = pe_tmp;
@@ -387,18 +339,15 @@ void render(HCAParameters &p, IPlot *plot = nullptr) {
         }
       }
 
-      add_disc(img_tmp, png_channels, template_width, template_height, pe_best);
+      putShape(img_tmp, png_channels, template_width, template_height, pe_best);
 
       if (i % (ndiscs / 100) == 0) {
         float currentRmse = computeRMSE(img_tmp, img_template, template_width,
                                         template_height, template_channels);
         p.RMSError = currentRmse;
 
-        if (plot) {
-
-          if (plot)
-            plot->push(currentRmse, ndiscs - i);
-        }
+        if (plot)
+          plot->push(currentRmse, ndiscs - i);
       }
     }
   });
@@ -427,14 +376,14 @@ int main(int argc, char *argv[]) {
   const char *ver = "0.0.15";
   string path = "C:\\temp\\images\\";
 
-  // vector<HCAParameters> params;
-  std::vector<std::string> names = {"dots"}; //, "Mona", "mario", "geo_shapes"
-
-  // std::map<std::string, HCAParameters> testData;
+  std::vector<std::string> names = {
+      "Mona",
+      "mario",
+  };
   std::map<std::string, std::vector<HCAParameters>> testData;
 
   tuple<int, int> alphaRange = {70, 80};       // recommended: 80, 80
-  tuple<float, float> radiusRange = {0.5, 20}; // recommended: 0.5, 20
+  tuple<float, float> radiusRange = {0.5, 60}; // recommended: 0.5, 20
   tuple<int, int> colorRange = {0, 255};
   Shape shape = Shape::Disc;
   string filename;
@@ -447,12 +396,12 @@ int main(int argc, char *argv[]) {
       std::cin.get();
       return -1;
     }
-    for (int alphaMin : {60, 80, 100}) {
+    for (int alphaMin : {60, 80}) {
 
       for (int alphaMax = alphaMin; alphaMax < 100; alphaMax += 20) {
-        for (int radiusMax : {20, 40, 60}) {
-          for (int d : {1000, 10000, 20000, 100000}) { // #shapes
-            for (int k : {100, 1000, 4000}) {   // #trials
+        for (int radiusMax : {60, 80, 100, 120}) { //{20, 40, 60, 80, 100}) {
+          for (int d : {100, 1000, 10000}) {       // #shapes
+            for (int k : {100, 1000, 2000}) {      // #trials
               parameter = {.d = d,
                            .k = k,
                            .alphaRange = {alphaMin, alphaMax},
@@ -484,14 +433,11 @@ int main(int argc, char *argv[]) {
 
   for (auto &[key, params] : testData) {
     printf("Processing image: %s\n", key.c_str());
-    for (auto &p : params) {
+    for (HCAParameters &p : params) {
       printf("Running with parameters: %s\n", p.toString().c_str());
       render(p, nullptr);
+      writeResultsByFile(p);
     }
-  }
-
-  for (auto &[key, params] : testData) {
-    writeResultsByFile(params);
   }
 
   std::cin.get();
