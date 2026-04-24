@@ -1,0 +1,102 @@
+\input{report_settings.tex}
+
+
+%\makeglossary
+%\usepackage[affil-it]{authblk}
+
+%\nocite{*}
+%\newgeometry{margin=0cm}
+%\newgeometry{textwidth=\textwidth}
+
+%\glsunsetall %glossary first use reset
+%\includepdf{figures/Title6.pdf}
+
+
+\bibliography{refs}
+\selectlanguage{swedish}
+
+\begin{document}
+
+\title{Hill Climbing Algorithm\\[0.5cm]}
+\author{Matz Johansson Bergström\\ matz.johansson@gmail.com}
+\date{April 24 2026}
+\selectlanguage{english}
+\maketitle
+
+%\clearpage
+
+%\begin{minipage}{\linewidth}
+\selectlanguage{english}
+
+
+\section*{Summary}
+\label{sec:summary}
+
+The purpose of this project is to investigate the effectiveness and performance characteristics of a stochastic optimization approach, specifically a Hill Climbing Algorithm (HCA), for approximating raster images using a set of primitive geometric elements (colored discs right now). While the visual output provides an intuitive measure of convergence, the primary focus is not artistic reproduction but computational efficiency and scalability.
+
+This work explores how far a simple, local-search-based method can be pushed when implemented in a high-performance computing context. Two implementations are considered: a CPU-based version in C++ and a parallel GPU-based version using CUDA. The project evaluates the trade-offs between these architectures in terms of convergence speed, solution quality, and resource utilization.
+
+
+Ultimately, the project aims to answer two questions:
+
+\begin{itemize}
+\item To what extent can a simple hill climbing strategy approximate complex visual data when scaled computationally?
+\item What performance gains and limitations arise when transitioning from a CPU-bound implementation to a GPU-accelerated one?
+\end{itemize}
+
+
+\pagestyle{fancy}
+
+\section{Introduction}
+
+Approximating images using simple primitives is a useful test case for studying optimization under constrained representations. In this project, a raster image is reconstructed using a set of colored discs, optimized through a Hill Climbing Algorithm (HCA). The problem is deliberately simple in formulation but computationally demanding, making it suitable for exploring performance-oriented implementation strategies.
+
+The work focuses on comparing a sequential CPU implementation in C++ with a parallel GPU implementation using CUDA. Rather than emphasizing visual fidelity alone, the project treats image approximation as a proxy for analyzing convergence behavior, parallelization opportunities, and hardware efficiency. This provides a practical context for examining how algorithm design scales across different compute architectures.
+
+\begin{comment}
+Subject to change
+\end{comment}
+
+
+\subsection{Evaluation methods}
+The error measurement used in this report is the Root mean squared
+measurement. To compare between original and rendered image, the
+root mean squared error is defined as
+
+\begin{equation}
+e_{rms}=\sqrt{\frac{1}{MN}\sum_x^{M-1}{\sum_y^{N-1}{[I(x,y)-{\widetilde{I}(x,y)]^2}}}}.
+\label{eq:rms}
+\end{equation}
+
+
+\section{CPU}
+
+\section{GPU}
+
+\section{Results}
+
+\addfigure{figures/HCA RMS time radius.pdf}{15cm}{Plot}{images}{hmmm}
+\begin{comment}
+  \addfig{figures/gould_pig_flower.pdf}{15cm}{\circled{1} - Pianist Glenn Gould shown in a silhouette by the piano. \circled{2} - A photograph of a pig. Please note the detail of the hair and the smooth section of the image that is out of focus. \circled{3} - A photograph of a rose, taken by the author. In the photo, a rectangle is indicated and will be zoomed in to in later figures.}{images}{hmm}
+\end{comment}
+\section{Conclusions and Discussion}
+
+
+
+\addcontentsline{toc}{section}{References}
+
+
+
+\newpage
+%\printbibliography{defernumbers=true}
+\printbibliography
+%\clearpage
+%\addtocontents{toc}{\protect\contentsline{Chapter}{Appendix}{}}
+\section{Appendix}
+
+\label{sec:appendix}
+
+
+
+\end{document}
+%that's all folks

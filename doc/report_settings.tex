@@ -1,0 +1,824 @@
+%Matz JB 2012
+%Using Brittish spelling of realise, colour, and conjunctions
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%a4paper
+
+\PassOptionsToPackage{table}{xcolor}
+\documentclass[a4paper, 11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{tocloft}
+\usepackage{fix-cm}
+\usepackage{titlesec}
+
+\usepackage{tikz} % Style 2, 3, 4
+\usetikzlibrary{calc} % 2, 3, 4
+\usetikzlibrary{decorations,decorations.shapes,shapes} % 3
+\usepackage{float}
+\usepackage[top=2cm, bottom=2cm]{geometry}
+\usepackage[bookmarks]{hyperref}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{amsmath}%för bmatrix
+\usepackage{url}
+\usepackage{eufrak}
+\usepackage{color, colortbl}
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xkeyval}
+\usepackage{xfor}
+\usepackage{etoolbox}
+\usepackage{longtable}
+\usepackage{supertabular}
+\usepackage{ textcomp }
+\definecolor{lightblue}{rgb}{0.9,0.95,0.99}
+\usepackage{graphics}
+\usepackage[sanitize=none, nonumberlist, acronym, toc, translate=false]{glossaries}
+\usepackage{glossary-superragged}
+\glsdisablehyper %no links
+\usepackage{tikz} % Style 2, 3, 4
+\usetikzlibrary{calc} % 2, 3, 4
+\usetikzlibrary{decorations,decorations.shapes,shapes} % 3
+
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{%base
+            \node[shape=circle,draw,inner sep=0.9pt] (char) {\footnotesize\bf \texttt{#1}};}}
+
+
+
+%http://tex.stackexchange.com/questions/2275/keeping-tables-figures-close-to-where-they-are-mentioned
+
+\usepackage{afterpage} %10i8~12
+
+%http://www.latex-community.org/viewtopic.php?f=5&t=2423
+    \usepackage[font=small, labelfont={color=labelcolor, bf}]{caption}
+    \captionsetup{%
+      within=section
+}
+
+
+%\restylefloat{figure}%place figure here!
+
+%listing tabs
+\def \tabsize {5}
+\def \basicstyle {\footnotesize} % {\scriptsize} %small footnotesize
+
+
+
+%\afterpage{\clearpage} %interesting
+
+% See p.105 of "TeX Unbound" for suggested values.
+    % See pp. 199-200 of Lamport's "LaTeX" book for details.
+    %   General parameters, for ALL pages:
+    \renewcommand{\topfraction}{0.95}	% max fraction of floats at top
+    \renewcommand{\bottomfraction}{0.2}	% max fraction of floats at bottom
+    %   Parameters for TEXT pages (not float pages):
+    \setcounter{topnumber}{2}
+    \setcounter{bottomnumber}{0}
+    \setcounter{totalnumber}{2}     % 2 may work better
+%    \setcounter{dbltopnumber}{2}    % for 2-column pages
+    \renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
+    \renewcommand{\textfraction}{0.17}	% allow minimal text w. figs
+    %   Parameters for FLOAT pages (not text pages):
+    \renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+	% N.B.: floatpagefraction MUST be less than topfraction !!
+    \renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
+
+
+
+%\usepackage{refcheck} %To find references (figures) I have not referenced
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%http://cs.gmu.edu/~sean/stuff/DoingLatexRight/
+\usepackage{times} %30/7 ~12
+
+\usepackage[
+    %backend = biber,%fungerade inte ihop med texlua. texlua "hittar inte bib-filen" 21/5
+%style=numeric,
+%    style = authoryear-icomp,
+    style = alphabetic, 
+%style=superscript,   
+    %sortlocale = de_DE,
+    natbib = true,
+    url = true, 
+    doi = true,
+    %sorting = sortinit,
+    eprint = true % vad gör denna?
+]{biblatex}
+
+%\usepackage[super]{natbib}
+%\addbibresource{refs.bib}
+
+
+\usepackage{todonotes}
+%\usepackage[colorinlistoftodos, textwidth=2cm,% backgroundcolor=light_blue,
+%            textsize=scriptsize,disable]{todonotes} %if lines start to go vertical, compile again... [25i10~09]
+%http://midtiby.blogspot.com/2007/09/todo-notes-in-latex.html
+
+\definecolor{shade}{HTML}{CCECCD}%must be after the "todonotes" package
+\definecolor{shade_q}{HTML}{D4D5E5}%must be after the "todonotes" package
+
+\newcommand{\todonum}[1] %to get rid of the lines
+{\todonumm{#1}}
+
+%for todo numberings
+\newcounter{todocounter}
+\newcommand{\todonumm}[2][]
+{\stepcounter{todocounter}\todo[inline,#1]{\thetodocounter: #2}}
+
+\newcommand{\subsubsubsection}[1]
+{\paragraph{#1}}
+
+
+
+\setcounter{tocdepth}{3}
+
+
+\usepackage[section]{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode} %[noend]
+\usepackage{multicol}
+\usepackage{pdfcomment}
+\usepackage{epsfig}
+\usepackage{epic} %this may or may not be able to download from servers (12 sept ~09), yes now it works [13i9~09]
+\usepackage{eepic}
+
+%\usepackage[mediumspace,mediumqspace,squaren,binary]{SIunits}
+\usepackage[squaren,binary]{SIunits}
+
+
+\usepackage{graphicx}
+%\usepackage[table]{xcolor}% [26i10~09] http://www.cv-templates.info/2009/07/alternate-row-shading-latex/
+\usepackage{nicefrac}%funkar inte för Ubuntu och jag hittar inte skiten 28i9~11
+
+\usepackage{wrapfig}
+%\usepackage{mathptmx}
+
+%For line numbers in the margin
+%\usepackage{lineno,color}
+%\linenumbers
+
+%http://www.terminally-incoherent.com/blog/2007/09/19/latex-squeezing-the-vertical-white-space/
+\renewenvironment{itemize}%
+  {\begin{list}{\arabic{enumi}.}%
+     {\topsep=0.1in\itemsep=0.5Em\parsep=0in\partopsep=0in\usecounter{enumi}}%
+   }{\end{list}}
+
+%\newcommand{\R}{\ensuremath{\mathcal{R}}}
+
+\newcommand{\rd}{\ensuremath{\mathrm{d}}}
+\newcommand{\id}{\ensuremath{\,\rd}}
+
+%Making symbols bold in math environment
+\newcommand{\mt}[1]{\boldsymbol{\mathbf{#1}}}
+
+\usepackage{verbatim}
+\usepackage[english, swedish]{babel}
+\usepackage{blindtext}
+\usepackage{microtype}
+
+\definecolor{keywords}{RGB}{255, 0, 90}
+\definecolor{comments}{RGB}{60, 179, 113}
+\definecolor{tableShade}{HTML}{E0FFE0}   %iTunes
+\definecolor{tableShade2}{HTML}{E0FFE0} %Finder
+
+
+\definecolor{keywordss}{rgb}{0, .4, 0}
+\definecolor{commentss}{rgb}{.3, .3, .7}
+\definecolor{stringss}{rgb}{.3, .7, .3}
+
+\definecolor{keycolor}{rgb}{0, 0, 0.4}
+
+\definecolor{light_blue}{rgb}{.8, .8, 1}
+\definecolor{blue}{rgb}{0, 0, .6}
+\definecolor{green}{rgb}{0, .5, 0}
+\definecolor{red}{rgb}{.7, 0, 0}
+\definecolor{LightSkyBlue}{rgb}{0.6, 0.6, 0.9}
+\definecolor{MidnightBlue}{rgb}{0.2, 0.2, 0.9}
+\definecolor{darkblue}{rgb}{0.8, 0, 0.5} %test
+
+\definecolor{labelcolor}{rgb}{0.1, 0.3, 0.1}
+
+%\definecolor{gray}{rgb}{0.9, 0.95, 1}
+\definecolor{gray}{rgb}{0.5, 0.5, 0.5}
+
+
+\usepackage{abstract}
+\usepackage{bm}
+
+
+\usepackage{textcomp}%http://tex.stackexchange.com/questions/55036/package-listings-error-undefined-control-sequence-because-of-single-quote-sy
+
+%\usepackage{underscore}
+\usepackage[strings]{underscore}
+
+\setlength{\parindent}{0Em}%4 letters indentation (ex=letter?!)
+\setlength{\bibnamesep}{0.5Em} %bibliography separation of different bibliography items
+
+
+\usepackage[parfill]{parskip}
+\hyphenpenalty=500
+%\setlength{\parskip}{0cm}
+
+%http://robjhyndman.com/researchtips/squeezing-space-with-latex/
+
+%\usepackage[compact]{titlesec}
+
+\usepackage{graphics}
+
+%\usepackage[explicit]{titlesec}
+\usepackage{titlesec}
+\begin{comment}
+\titleformat{\section}[display]
+{\bfseriese}
+{\hfill \tikz[remember picture] \node[] (nr) {\fontsize{120}{70}\selectfont\color{green!50!white}\textbf{\thesection}};
+\begin{tikzpicture}[overlay,remember picture]
+\coordinate (leftborder) at ($(nr)-(100,0)$);
+\coordinate (left) at ($(nr.west)-(1.5,0)$);
+\draw[line width=0.5em, draw=green!50!white] ($(nr.north east)+(0,0.4)$) -- ($(nr.north west)+(0,0.4)$) -- (left) -- (leftborder);
+\end{tikzpicture}}
+{-2ex}
+{\filleft\fontsize{40}{70}\selectfont\scshape}
+[\vspace{0ex}]
+\end{comment}
+
+\begin{comment}
+\titleformat{\section}[display]
+{\bfseriese}
+{
+\hfill \tikz[remember picture] \node[] (nr) {\fontsize{100}{40}\selectfont\color{black}\thesection};
+\begin{tikzpicture}[overlay, remember picture]
+\draw[line width = 2em, draw=black] (0, 1.5) -- (10, 1.5);
+\end{tikzpicture}}
+{-1ex}
+{\filright\fontsize{20}{20}\selectfont\scshape}
+[\vspace{0ex}]
+\end{comment}
+
+
+\newcommand*{\justifyheading}{\raggedleft}
+
+
+\begin{comment}
+%right adjusted:
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries\justifyheading}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+
+\titleformat{\section}{\normalfont\Large\bfseries\raggedleft}{\thesection}{1em}{}
+
+\titleformat{\subsection}{\normalfont\large\bfseries\justifyheading}{\thesubsection}{1em}{}
+\end{comment}
+
+%\newcommand*{\justifyheading}{\raggedleft}
+
+
+\begin{comment}
+\titleformat{\section}
+{\titlerule
+\vspace{.8ex}%
+\normalfont\itshape}
+{\thesection.}{.5em}{}
+\end{comment}
+
+%\usepackage[linedheaders,parts,pdfspacing]{classicthesis} % ,manychapters
+
+
+%\draw[decoration={shape backgrounds,shape size=.5cm,shape=signal},signal from=west, signal to=east,decorate, draw=red!50!black, fill=red!50, decoration={shape sep=.5cm},line 
+
+%\titlespacing{\section}{0pt}{2ex}{1ex}
+%\titlespacing{\subsection}{0pt}{1ex}{0ex}
+%\titlespacing{\subsubsection}{0pt}{0.5ex}{0ex}
+
+\begin{comment}
+\titleformat{\section}[display]
+    {\normalfont\Large\raggedleft}
+    {\MakeUppercase{\sectiontitlename}%
+    \rlap{ \resizebox{!}{1.2cm}{\thesection} \rule{15cm}{1.2cm} } }
+    {10pt}{\Huge}
+
+\titlespacing*{\section}{0pt}{30pt}{20pt}
+\end{comment}
+
+
+
+%\titleformat{name=\section,page=even}[leftmargin]
+
+% {\filleft\scshape}{\thesection}{.5em}{}
+
+\lstset{linewidth=0.465\textwidth}%width of code box, 4in
+\lstset{xleftmargin=0.1in}
+\lstset{backgroundcolor=\color{white}}
+
+%keywordstyle causes acrobat reader to fuck up
+
+\def \lstsetC {
+\lstset{
+	language = C++,
+frame=bottomline,
+	keywordstyle =\bfseries\ttfamily\color[rgb]{0, 0, 0.4},
+	identifierstyle =\bfseries\ttfamily\color[rgb]{0, 0.4, 0},
+	commentstyle =\color[rgb]{0.333,0.345,0.333},
+	stringstyle =\ttfamily\color[rgb]{0.627,0.126,0.941},
+	showstringspaces = false,
+	basicstyle = \basicstyle, %\small,
+	tabsize = \tabsize,
+	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{$\ldots$}},
+	breakatwhitespace =false,
+	aboveskip ={1.5\baselineskip},
+        upquote =true,
+        captionpos =t,
+        extendedchars =true,
+morekeywords={omp, parallel, \#pragma, for, reduction, pragma, default, QueryPerformanceCounter, QueryPerformanceTimer, QueryPerformanceFrequency, LARGE_INTEGER}
+}
+}
+
+%%error below
+
+\def \lstsetMATLAB {
+\lstset{
+	language = Matlab,
+	keywordstyle =\bfseries\ttfamily\color[rgb]{0, 0, 0.4},
+	identifierstyle =\bfseries\ttfamily\color[rgb]{0,0.4,0},
+	commentstyle =\color[rgb]{0.333, 0.333, 0.333},
+	stringstyle =\ttfamily\color[rgb]{0.1, 0.2, 0.1},
+	showstringspaces = false,
+	basicstyle = \basicstyle,
+%	numberstyle=\footnotesize,
+        %numberstyle       = \footnotesize\color{darkbrown}\slshape,
+%	numbers=left,
+%	stepnumber =1,
+	%numbersep =10pt,
+	tabsize    = 5,
+%       frame = l,
+        breaklines = true,
+	prebreak   = \raisebox{0ex}[0ex][0ex]{\ensuremath{$\ldots$}},
+	breakatwhitespace =false,
+	aboveskip     = {1.5\baselineskip},
+        %columns =fullflexible,
+        upquote       = true,
+        captionpos    = t,
+        extendedchars = true,
+        morekeywords={try, catch, rethrow, complex, tic, toc},
+        morecomment=[l][keywordstyle]{!}
+}
+}
+
+
+
+\def \lstsetCUDA {
+\lstset{
+	language         = C,
+	keywordstyle     = \bfseries\ttfamily\color[rgb]{0, 0, 0.4},
+	identifierstyle  = \bfseries\ttfamily\color[rgb]{0, 0.4, 0},
+	commentstyle     = \color[rgb]{0.133, 0.3, 0.133},
+	stringstyle      = \ttfamily\color[rgb]{0.1, 0.2, 0.1},
+	showstringspaces = false,
+	basicstyle       = \basicstyle,
+%	numberstyle=\footnotesize,
+        %numberstyle       = \footnotesize\color{darkbrown}\slshape,
+%	numbers=left,
+%	stepnumber =1,
+	%numbersep =10pt,
+%        backgroundcolor=\color[rgb]{0.95, 0.95, 0.95},
+	tabsize       = 1,
+        rulecolor=\color{black}, 
+%        frame = l,
+        breaklines    = true,
+	prebreak      = \raisebox{0ex}[0ex][0ex]{\ensuremath{$\ldots$}},
+	breakatwhitespace =false,
+	aboveskip     = {1.5\baselineskip},
+        %columns =fullflexible,
+        upquote       = true,
+        captionpos    = t,
+        extendedchars = true,
+        morekeywords={QueryPerformanceCounter, dim3, __global__, cudaEvent_t, cudaEventRecord, cudaEventStop, cudaEventSynchronize,cudaEventElapsedTime, cudaEventCreate, cudaThreadSynchronize},
+morecomment=[s]{<<<}{>>>}
+}
+}
+
+%\lstset{frame=lrb,xleftmargin=\fboxsep,xrightmargin=-\fboxsep}
+
+
+
+\newcommand{\code}[1]
+{\texttt{\textbf{#1}}}
+
+
+%updated 22i11~11 latest version of all
+%this version will work with twocolumns
+\newcommand{\addfigure}[4]
+{
+\begin{figure}[tbh]
+
+  \begin{center}
+        \includegraphics[width=#2]{#1}
+  \end{center}
+
+  \caption{#3}
+\label{fig:#4}
+  \vspace{-5pt}
+\end{figure}
+
+}
+
+%updated 22i11~11 latest version of all
+%this version will work with twocolumns
+%updated with makebox, to make the figures centered without regard of textwidth
+\newcommand{\addfig}[5]
+{
+\vspace{1Em}
+\begin{figure}[tbh]
+  \makebox[\textwidth][c]{\includegraphics[width=#2]{#1}}%
+  \caption[#5]{#3}
+  \label{fig:#4}
+%\vspace{1Em}
+
+\end{figure}
+}
+
+
+
+
+\begin{comment}
+
+\begin{center}
+\begin{figure}[!h]
+
+%  \begin{center}
+        \includegraphics[width = #2]{#1}
+ % \end{center}
+
+  \caption[#5]{#3}
+\label{fig:#4}
+  \vspace{-5pt}
+\end{figure}
+\end{center}
+}
+\end{comment}
+
+
+
+%Matz Johansson B. 20i9~09, 14:30
+\newcommand{\ikon}[1]
+{
+  \def\iheight{1em} %new variable containing the height of the icons based
+  % on the height of 'M' in the current font [20i9~09]
+  \raisebox{-0.2\iheight} %we lower the graphics under baseline so an icon [] will between...
+  {                     %parenthesis look vertically centered
+    \hspace{-1.7em}
+    {
+      \includegraphics[height=\iheight]{#1}
+    } %hspace, no empty lines in renewcommand or it will introduce newlines
+    \hspace{-1em}%av nån anledning måste man göra såhär [24i10~09]
+  } %raisebox
+} %newcommand
+
+
+%Matz Johansson B. 20i9~09, 14:30
+\newcommand{\ikonn}[1]
+{
+  \def\iheight{15pt} %new variable containing the height of the icons based
+  % on the height of 'M' in the current font [20i9~09]
+  \raisebox{-0.2\iheight} %we lower the graphics under baseline so an icon [] will between...
+  {                     %parenthesis look vertically centered
+    \hspace{-2em}
+    {
+	\vspace{0Em}
+	{
+      \includegraphics[height=\iheight]{#1}
+    }
+	} %hspace, no empty lines in renewcommand or it will introduce newlines
+    \hspace{-1em}%av nån anledning måste man göra såhär [24i10~09]
+  } %raisebox
+} %newcommand
+
+
+
+
+%\hypersetup{colorlinks=false, linkcolor=black}%pdfborder
+
+\hypersetup{hidelinks=true} %change this...
+%
+\hypersetup{
+  colorlinks,
+  citecolor = softgreen,%citecol,
+  linkcolor = linkcol, %black
+  urlcolor  = whiteo}
+
+\hypersetup{
+  citebordercolor = white,
+  filebordercolor = white,
+  linkbordercolor = white
+}
+
+%\hypersetup{backref=true}
+
+%vi vill inte se boxar runt länkar [19i8~11]
+%\usepackage[colorlinks=true]{hyperref}
+
+%\usepackage[colorlinks=true, linktocpage=true]
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+%\begin{comment}
+%från Christian Von Schultz' sida
+\usepackage{bbm}
+\newcommand{\N}{\ensuremath{\mathbbm{N}}}
+\newcommand{\Z}{\ensuremath{\mathbbm{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbbm{Q}}}
+\newcommand{\R}{\ensuremath{\mathbbm{R}}}
+\newcommand{\C}{\ensuremath{\mathbbm{C}}}
+
+
+%Matz transpose
+\newcommand{\tr}{\top}
+%\newcommand{\tr}{\mathrm T}
+
+
+%\end{comment}
+
+
+%27/6 1012
+\newcommand{\com}[1]
+{
+\begin{comment} #1 \end{comment}
+}
+
+
+\newcommand{\kommentar}[1]
+ {
+\pdfmargincomment[open=true, icon=note, color=llightgray, author=Matz]{#1}
+ }
+% {  \footnotesize\colorbox{lightblue}{#1}}
+
+%\renewcommand*{\glstextformat}[1]{\textsf{#1}}
+
+
+\lstset{language    = C}
+\lstset{linewidth   = 5.78in}%width of code box 4.5in
+\lstset{xleftmargin = 0.2in}%0.25
+
+\lstset{keywordstyle=\color{keywords}\bfseries}
+\lstset{commentstyle=\color{DarkGreen}}
+%\lstset{backgroundcolor=\color{CodeBackground}}
+
+\definecolor{darkblue}{rgb}{0, 0, 0.35}
+\definecolor{darkgreen}{rgb}{0, 0.1, 0}
+\definecolor{darkbrown}{rgb}{0.6, 0.6, 0}
+
+\definecolor{softgreen}{rgb}{0.8, 0, 0.8}
+\definecolor{linkcol}{rgb}{0, 0, 0.7} %very visible to be able to see how many the report has over the report
+
+\definecolor{darkgray}{rgb}{0.35, 0.35, 0.35}
+\definecolor{pink}{rgb}{0.35, 0.35, 0.2}
+\definecolor{whiteo}{rgb}{0.1, 0.1, 0.8}
+
+\definecolor{white}{rgb}{1, 1, 1}
+%\definecolor{citecol}{rgb}{0.2, 0.2, 1}
+\definecolor{citecol}{rgb}{1, 0.2, 0.2} %very visible to be able to see how many the report has over the report
+
+
+
+%\color[rgb]{0,0.5,1}
+
+\lstset{
+	language = Matlab,
+	keywordstyle =\bfseries\ttfamily\color[rgb]{0, 0, 0.4},
+	identifierstyle =\ttfamily,
+	commentstyle =\color[rgb]{0.133,0.545,0.133},
+	stringstyle =\ttfamily\color[rgb]{0.627,0.126,0.941},
+	showstringspaces = false,
+	basicstyle = \basicstyle,
+%	numberstyle=\footnotesize,
+        %numberstyle       = \footnotesize\color{darkbrown}\slshape,
+%	numbers=left,
+%	stepnumber =1,
+	%numbersep =10pt,
+	tabsize =\tabsize,
+       % frame = l,
+        breaklines =true,
+	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{$\ldots$}},
+	breakatwhitespace =false,
+	aboveskip ={1.5\baselineskip},
+        %columns =fullflexible,
+        upquote =true,
+        captionpos =t,
+        extendedchars =true
+}
+
+
+
+%  \usepackage{caption}
+%\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFont{white}{\color{white}} %black
+\DeclareCaptionFormat{listing}{\colorbox[rgb]{0, 0, 0}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing, labelfont=white, textfont=white, singlelinecheck=false, font={bf,footnotesize}}
+
+
+
+
+\lstset{xleftmargin=\fboxsep, xrightmargin=-\fboxsep}
+
+%\DeclareCaptionFormat{listing}{%
+%  \parbox{\textwidth}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}\vskip-4pt}}
+%\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+%\lstset{frame=lrb,xleftmargin=\fboxsep,xrightmargin=-\fboxsep}
+%\lstset{frameround=tttt}
+
+
+%\renewcommand{\thelstlisting}{\thesection-\arabic{lstlisting}}
+
+\setlength{\marginparwidth}{1.2in}
+\let\oldmarginpar\marginpar
+\renewcommand\marginpar[1]{\-\oldmarginpar[\raggedleft\footnotesize #1]%
+{\raggedright\footnotesize #1}}
+
+\newenvironment{addcode}
+{\begin{texttt}{}{\setlength{\leftmargin}{1em}}\item\scriptsize\bfseries}
+{\end{texttt}}
+
+%error below
+
+
+%vers{0.4}{0.5} version between "releases"
+%Created by Matz
+%Since 31/8 2012, vers clashes with clearpage...
+%We cannot compare floats but point metric is fine
+\newcommand{\vers}[2]%
+ {%
+\ifnum 1=0%
+     \ifdim #2pt > #1pt%
+            \marginpar{\bf New:\\ #1 $\rightarrow$ #2}%
+     \else%
+            \marginpar{(Ver: #2)}    %
+     \fi%
+     \ifdim #2pt>1pt %give tips: on or off
+            \begin{flushright}%
+               % \footnotesize
+                \ifdim #2pt > 0.2pt%
+                       \colorbox{lightblue}{Check content of text}
+                \fi%
+                \ifdim #2pt > 0.5pt%
+                       \kommentar{Check that citations and structure of the text is correct}%
+                \fi%
+
+                \ifdim #2pt > 0.8pt%
+                       \kommentar{Check that grammar and punctuation is correct}%
+                \fi%
+
+                \ifdim #2pt > 0.94pt%
+                       \kommentar{This text is supposed to be the final version}%
+                \fi%
+            \end{flushright}%
+     \fi%
+\fi%
+}
+
+
+
+\newcommand{\about}[1]
+ {
+\footnote{About: #1}
+ }
+
+
+\newcommand{\ver}[1]
+ {
+%#1pt
+%\vspace{-2Em}
+%\marginpar{Version: #1}
+\vers{#1}{#1} %no change between versions
+ }
+
+
+%\DeclareBibliographyCategory{Book}
+%\DeclareBibliographyCategory{Report}
+%\DeclareBibliographyCategory{Web page}
+%\DeclareBibliographyCategory{Procedings}
+
+\def \frw {9} %figure result width in centimeter
+
+\def \naive {na\"{\i}ve}
+
+\def \codecushion {\vspace{-2Em}}
+\def \tablecapdist {\vspace{2Em}}
+\def \tabletopdist {\vspace{1Em}}
+
+\def \eg {e.g.,\ }
+\def \ie {i.e.,\ }
+
+%Brittish English use without z
+\def \realize {realise }
+\def \realized {realised }
+
+\def \clearpages {\clearpage }
+
+%\frenchspacing
+
+\hyphenation{single-Comp-Thread}
+%\usepackage{url}%break path
+%http://tex.stackexchange.com/questions/299/how-to-get-long-texttt-sections-to-break
+
+\begin{comment}
+\newcommand*\justify{%
+  \fontdimen2\font=0.4em% interword space
+  \fontdimen3\font=0.2em% interword stretch
+  \fontdimen4\font=0.1em% interword shrink
+  \fontdimen7\font=0.1em% extra space
+  \hyphenchar\font=`\-% allowing hyphenation
+}
+\end{comment}
+
+
+%error above
+
+%http://www.texample.net/tikz/examples/framed-tikz/
+
+\usepackage{framed}
+
+%http://www.forkosh.com/pstex/latexcommands.htm
+%\renewcommand{\rmdefault}{garamond}
+
+%\newcommand{\tmpsection}[1]{}
+
+
+
+
+%\showcitenames
+%\nocite{*}
+
+%Fixa
+\pdfinfo{
+   /Author (Matz Johansson Bergstrom)
+   /Title  (Creating a PDF document using PDFLaTeX)
+   /Subject (PDFLaTeX)
+   /Keywords (Convolution;Fast Fourier Transform; GPU; CPU; Multithreading; CUDA)
+}
+
+\definecolor{llightgray}{rgb}{0.9, 0.99, 0.93}
+\definecolor{tabletitle}{rgb}{0.85, 0.92, 0.85}
+\definecolor{tablegray}{rgb}{0.7, 0.8, 0.7}
+
+\definecolor{tablelight}{rgb}{0.98, 0.99, 0.98} %table background
+
+\definecolor{tabledark}{rgb}{0.95, 0.9, 0.8}%not used?
+
+
+
+\definecolor{lightgray}{gray}{0.95}
+\usepackage[table]{xcolor} %must be loaded last
+%F�r att konvertera figurer som har problem med transparans:
+
+%http://docupub.com/pdfconvert/done.aspx?cid=77689d67-6e7f-4364-97d2-d0f7aa245ef0
+%konvertera till pdf 1.3 s� skall det ordna sig
+\renewcommand*{\glspostdescription}{}
+
+%\psfrag{text in eps to replace}[l][l]{text in latex to use}
+
+
+%http://www.bradleymedia.org/latex-formatting/
+%\titleformat*{\section}
+%   {\normalfont\Large\bfseries\color{black} }
+
+
+
+\newenvironment{widepar}%
+  {\setlength{\rightskip}{-\marginparsep}\addtolength{\rightskip}{-\marginparwidth}}{\par}
+
+%\usepackage{showkeys} %to see the labels
+
+\pdfminorversion=4
+
+
+%\usepackage{url}
+
+%% Define a new 'leo' style for the package that will use a smaller font.
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
+\makeatother
+%% Now actually use the newly defined style.
+\urlstyle{leo}
+
+%\usepackage[hyphens]{url}
+
+\headheight=14pt %fixing fancyheader warning
+%\pretolerance=15000 %fixing overfull warning
+
+%\renewcommand{\cftdot}{}
+
+%http://tex.stackexchange.com/questions/38536/how-can-i-pass-underscore-to-newcommand-properly
+
+\newcommand{\codelst}{\begingroup
+  \catcode`_=12 \docodelst}
+\newcommand{\docodelst}[1]{%
+  \lstinputlisting[caption=\texttt{#1}]{#1}%
+  \endgroup
+}
+
+
+\renewcommand{\arraystretch}{1.1}
