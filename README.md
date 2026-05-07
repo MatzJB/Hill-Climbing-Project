@@ -42,7 +42,4 @@ alongside the inputs with the parameter string appended to the filename.
 A `_results.csv` is also written per input with RMSE and timing data for
 parameter sweep analysis.
 
-## Project structure
-
-## Parameters
 
