@@ -18,17 +18,11 @@ CMake fetches all other dependencies automatically (GLM, SDL2, ImGui, ImPlot,
 GoogleTest). No manual installs beyond the table above.
 
 ## Build (Windows for now)
-Just run build.bat and cmake will create the project solution file *HCA.sln* under /build.
+Just run build.bat and cmake will create the project solution file *HCA.sln* under /build, compile in VS and the release executable will be placed under build/Release.
 
 
 > **Note:** The first build downloads dependencies via FetchContent and may
 > take several minutes. Subsequent builds are fast.
-
-## Run
-
-```bat
-build\Release\HCA.exe
-```
 
 Input images are configured in `main.cpp` under the `names` vector and `path`
 variable. Default path is `C:\temp\images\`. Output images are written
@@ -37,4 +31,6 @@ alongside the inputs with the parameter string appended to the filename.
 A `_results.csv` is also written per input with RMSE and timing data for
 parameter sweep analysis.
 
+## Documentation
+To generate the report, navigate to doc/ run *lat.bat* and the report will be generated.
 
