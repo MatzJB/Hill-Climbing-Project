@@ -17,13 +17,8 @@ by RMSE improvement.
 CMake fetches all other dependencies automatically (GLM, SDL2, ImGui, ImPlot,
 GoogleTest). No manual installs beyond the table above.
 
-## Build
-
-```bat
-git clone https://github.com/YOUR_USERNAME/Hill-Climbing-Project.git
-cd Hill-Climbing-Project
-build.bat
-```
+## Build (Windows for now)
+Just run build.bat and cmake will create the project solution file *HCA.sln* under /build.
 
 
 > **Note:** The first build downloads dependencies via FetchContent and may
