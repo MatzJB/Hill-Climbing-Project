@@ -11,17 +11,37 @@
 %\glsunsetall %glossary first use reset
 %\includepdf{figures/Title6.pdf}
 
+%figures/david d 50000 k 2000 shape 1 alpha 60-80 radius 0.50-20.00.png
 
 \bibliography{refs}
-\selectlanguage{swedish}
+\selectlanguage{english}
 
 \begin{document}
 
-\title{Hill Climbing Algorithm\\[0.5cm]}
-\author{Matz Johansson Bergström\\ matz.johansson@gmail.com}
-\date{April 24 2026}
-\selectlanguage{english}
-\maketitle
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+
+    {\Huge\bfseries A Study of Hill Climbing for\\[0.3em]
+    Geometric Image Approximation\par}
+    \vspace{1.5cm}
+
+    \includegraphics[width=0.58\textwidth]{figures/david d 50000 k 2000 shape 1 alpha 60-80 radius 0.50-20.00.png}\\[0.6em]
+    {\small\itshape Michelangelo's David created using 50000 transparent discs.\par}
+
+    {\large Matz Johansson Bergström\par}
+    \vspace{0.2cm}
+    {\normalsize \href{mailto:matz.johansson@gmail.com}{matz.johansson@gmail.com}\par}
+    \vspace{0.2cm}
+     {\small \href{https://github.com/MatzJB/Hill-Climbing-Project}{github.com/matzjb/HCA}\par}
+    \vspace{0.2cm}
+    {\normalsize April 24, 2026\par}
+    \vspace{1.5cm}
+
+    \vfill
+
+\end{titlepage}
+
 
 %\clearpage
 
@@ -32,9 +52,9 @@
 \section*{Summary}
 \label{sec:summary}
 
-The purpose of this project is to investigate the effectiveness and performance characteristics of a stochastic optimization approach, specifically a Hill Climbing Algorithm (HCA), for approximating raster images using a set of primitive geometric elements (colored discs right now). While the visual output provides an intuitive measure of convergence, the primary focus is not artistic reproduction but computational efficiency and scalability.
+The purpose of this project is to investigate the effectiveness and performance of a simple Hill Climbing Algorithm (HCA), for approximating raster images using a set of primitive geometric elements (colored discs). While the visual output provides an intuitive measure of convergence, the primary focus is not artistic reproduction but computational efficiency and scalability.
 
-This work explores how far a simple, local-search-based method can be pushed when implemented in a high-performance computing context. Two implementations are considered: a CPU-based version in C++ and a parallel GPU-based version using CUDA. The project evaluates the trade-offs between these architectures in terms of convergence speed, solution quality, and resource utilization.
+This work explores how far a simple, local-search-based method can be pushed when implemented in a high-performance computing context. Two implementations are considered: a CPU-based version in C++ using OpenMP and a parallel GPU-based version using CUDA. The project evaluates the trade-offs between these architectures in terms of convergence speed, solution quality, and resource utilization and the choice of parameters to reconstruct the image.
 
 
 Ultimately, the project aims to answer two questions:
@@ -49,13 +69,28 @@ Ultimately, the project aims to answer two questions:
 
 \section{Introduction}
 
-Approximating images using simple primitives is a useful test case for studying optimization under constrained representations. In this project, a raster image is reconstructed using a set of colored discs, optimized through a Hill Climbing Algorithm (HCA). The problem is deliberately simple in formulation but computationally demanding, making it suitable for exploring performance-oriented implementation strategies.
+Approximating images using simple primitives is a useful test case for studying optimization under constrained representations. In this project, a raster image is reconstructed using a set of colored discs, optimized through HCA. The problem is deliberately simple in formulation but computationally demanding, making it suitable for exploring performance-oriented implementation strategies.
 
 The work focuses on comparing a sequential CPU implementation in C++ with a parallel GPU implementation using CUDA. Rather than emphasizing visual fidelity alone, the project treats image approximation as a proxy for analyzing convergence behavior, parallelization opportunities, and hardware efficiency. This provides a practical context for examining how algorithm design scales across different compute architectures.
 
+
+\subsection{The algorithm}
+
+The algorithm is simple, place a disc in a buffer $k$ trials, the disc that minimize a known error metric of those trials is placed into the buffer, and the routine continues with the next disc.
+
+The randomness of the disc placement depends on 
 \begin{comment}
-Subject to change
+\begin{itemize}
+  \item $x \in [0, templateWidth)$
+  \item $y \in [0, templateHeight)$
+  \item $RGB \in [0, 255)$
+  \item $alpha \in [5, 255)$
+  \item $radius \in [5, 20)$
+\end{itemize}
 \end{comment}
+
+\subsection{Experiments}
+
 
 
 \subsection{Evaluation methods}
@@ -75,16 +110,12 @@ e_{rms}=\sqrt{\frac{1}{MN}\sum_x^{M-1}{\sum_y^{N-1}{[I(x,y)-{\widetilde{I}(x,y)]
 
 \section{Results}
 
-\addfigure{figures/HCA RMS time radius.pdf}{15cm}{Plot}{images}{hmmm}
-\begin{comment}
-  \addfig{figures/gould_pig_flower.pdf}{15cm}{\circled{1} - Pianist Glenn Gould shown in a silhouette by the piano. \circled{2} - A photograph of a pig. Please note the detail of the hair and the smooth section of the image that is out of focus. \circled{3} - A photograph of a rose, taken by the author. In the photo, a rectangle is indicated and will be zoomed in to in later figures.}{images}{hmm}
-\end{comment}
+\addfigure{figures/HCA RMS time radius.pdf}{15cm}{Plot}{images}{}
+
 \section{Conclusions and Discussion}
 
 
-
 \addcontentsline{toc}{section}{References}
-
 
 
 \newpage
@@ -97,6 +128,4 @@ e_{rms}=\sqrt{\frac{1}{MN}\sum_x^{M-1}{\sum_y^{N-1}{[I(x,y)-{\widetilde{I}(x,y)]
 \label{sec:appendix}
 
 
-
 \end{document}
-%that's all folks
