@@ -32,5 +32,5 @@ A `_results.csv` is also written per input with RMSE and timing data for
 parameter sweep analysis.
 
 ## Documentation
-To generate the report, navigate to doc/ run *lat.bat* and the report will be generated.
+To generate the report, navigate to doc/ run *lat.bat* and the report will be generated. Prerequisites: *MiKTeX*
 
