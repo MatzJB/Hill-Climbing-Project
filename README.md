@@ -1,8 +1,10 @@
 # Hill-Climbing-Project (UNDER CONSTRUCTION)
-This project shows some experiments with a simple Hill Climbing Algorithm (transparent discs) implemented in C++ (OpenMP).
+This project is based on a Matlab experiment I did (look under src/matlab).
+This project goes further into C++ and OpenMP (and later, CUDA).
 
-Image approximation via stochastic disc placement. Reconstructs a target image
-by iteratively placing the best candidate shape from *k* random trials, evaluated
+## What is it?
+An implementation of a image approximation via stochastic disc placement. Basically it reconstructs a target image
+by iteratively placing the best candidate shape (disc for now) from *k* random trials, evaluated
 by RMSE improvement.
 
 ## Prerequisites
@@ -30,6 +32,13 @@ alongside the inputs with the parameter string appended to the filename.
 
 A `_results.csv` is also written per input with RMSE and timing data for
 parameter sweep analysis.
+
+
+## Lessons learned
+The plot functionality is only to see how the approximation improves. Unfortunately, to update the plot one thread has to be sacrificed, so I am thinking of removing it and just use the parameters struct properties to get the improvement info I need.
+
+My Matlab version is smarter than the C++ version. I wanted to test how far a naive hill climbing algorithm can be optimized with only threading and some constraints (opacity). We can make lots of assumptions about the distribution of colors, but I want to add more shapes and unexpected negative shapes to see what will happen (what about a sinc disc?). Additionally, making the core idea simple is good because of the later transition to CUDA.
+
 
 ## Documentation
 To generate the report, navigate to doc/ run *lat.bat* and the report will be generated. Prerequisites: *MiKTeX*
