@@ -1,4 +1,4 @@
-# Hill-Climbing-Project
+# Hill-Climbing-Project (UNDER CONSTRUCTION)
 This project shows some experiments with a simple Hill Climbing Algorithm (transparent discs) implemented in C++ (OpenMP).
 
 Image approximation via stochastic disc placement. Reconstructs a target image
