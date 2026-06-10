@@ -1,6 +1,8 @@
 # Hill-Climbing-Project (UNDER CONSTRUCTION)
 
 [![Build](https://github.com/MatzJB/Hill-Climbing-Project/actions/workflows/build.yml/badge.svg)](https://github.com/MatzJB/Hill-Climbing-Project/actions/workflows/build.yml)
+[![Docs](https://github.com/MatzJB/Hill-Climbing-Project/actions/workflows/docs.yml/badge.svg)](https://github.com/MatzJB/Hill-Climbing-Project/actions/workflows/docs.yml)
+
 
 This project is based on a Matlab experiment I did (look under src/matlab).
 This project goes further into C++ and OpenMP (and later, CUDA).
