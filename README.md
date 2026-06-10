@@ -1,5 +1,8 @@
 # Hill-Climbing-Project (UNDER CONSTRUCTION)
 
+<img width="734" height="142" alt="Hill Climber Logo" src="https://github.com/user-attachments/assets/b4209b0b-3733-437a-88ba-ff7f59e81154" />
+
+
 [![Build](https://github.com/MatzJB/Hill-Climbing-Project/actions/workflows/build.yml/badge.svg)](https://github.com/MatzJB/Hill-Climbing-Project/actions/workflows/build.yml)
 [![Docs](https://github.com/MatzJB/Hill-Climbing-Project/actions/workflows/docs.yml/badge.svg)](https://github.com/MatzJB/Hill-Climbing-Project/actions/workflows/docs.yml)
 
