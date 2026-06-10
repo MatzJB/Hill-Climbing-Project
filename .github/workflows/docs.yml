@@ -2,7 +2,11 @@ name: Docs
 
 on:
   push:
+    paths:
+      - 'doc/**'
   pull_request:
+    paths:
+      - 'doc/**'
 
 jobs:
   docs:
@@ -10,7 +14,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-            
+
       - name: Install TeX
         run: |
           sudo apt-get update
