@@ -9,7 +9,16 @@ jobs:
     runs-on: windows-2022
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Install MiKTeX
+        uses: zauguin/install-miktex@v2
+
+      - name: Enable MiKTeX auto-install
+        shell: cmd
+        run: |
+          initexmf --set-config-value=[MPM]AutoInstall=1
 
       - name: Build documentation
         shell: cmd
