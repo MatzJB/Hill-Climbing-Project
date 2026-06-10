@@ -1,0 +1,16 @@
+name: Docs
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  docs:
+    runs-on: windows-2022
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build documentation
+        shell: cmd
+        run: doc\lat.bat
