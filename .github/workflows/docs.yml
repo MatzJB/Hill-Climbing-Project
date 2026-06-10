@@ -6,20 +6,20 @@ on:
 
 jobs:
   docs:
-    runs-on: windows-2022
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install MiKTeX
-        uses: zauguin/install-miktex@v2
-
-      - name: Enable MiKTeX auto-install
-        shell: cmd
+      - name: Install TeX Live
         run: |
-          initexmf --set-config-value=[MPM]AutoInstall=1
+          sudo apt-get update
+          sudo apt-get install -y \
+            texlive-latex-base \
+            texlive-latex-extra \
+            texlive-fonts-recommended
 
       - name: Build documentation
-        shell: cmd
-        run: doc\lat.bat
+        run: |
+          cd doc
+          ./lat.bat
