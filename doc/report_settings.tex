@@ -1,11 +1,3 @@
-%Matz JB 2012
-%Using Brittish spelling of realise, colour, and conjunctions
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%a4paper
-
 \PassOptionsToPackage{table}{xcolor}
 \documentclass[a4paper, 11pt]{article}
 \usepackage[T1]{fontenc}
@@ -178,7 +170,7 @@
 \newcommand{\mt}[1]{\boldsymbol{\mathbf{#1}}}
 
 \usepackage{verbatim}
-\usepackage[english, swedish]{babel}
+\usepackage[english]{babel}
 \usepackage{blindtext}
 \usepackage{microtype}
 
@@ -212,7 +204,7 @@
 \usepackage{bm}
 
 
-\usepackage{textcomp}%http://tex.stackexchange.com/questions/55036/package-listings-error-undefined-control-sequence-because-of-single-quote-sy
+\usepackage{textcomp} %http://tex.stackexchange.com/questions/55036/package-listings-error-undefined-control-sequence-because-of-single-quote-sy
 
 %\usepackage{underscore}
 \usepackage[strings]{underscore}
@@ -425,9 +417,6 @@ morecomment=[s]{<<<}{>>>}
 
 }
 
-%updated 22i11~11 latest version of all
-%this version will work with twocolumns
-%updated with makebox, to make the figures centered without regard of textwidth
 \newcommand{\addfig}[5]
 {
 \vspace{1Em}
@@ -439,27 +428,6 @@ morecomment=[s]{<<<}{>>>}
 
 \end{figure}
 }
-
-
-
-
-\begin{comment}
-
-\begin{center}
-\begin{figure}[!h]
-
-%  \begin{center}
-        \includegraphics[width = #2]{#1}
- % \end{center}
-
-  \caption[#5]{#3}
-\label{fig:#4}
-  \vspace{-5pt}
-\end{figure}
-\end{center}
-}
-\end{comment}
-
 
 
 %Matz Johansson B. 20i9~09, 14:30
@@ -497,10 +465,7 @@ morecomment=[s]{<<<}{>>>}
 } %newcommand
 
 
-
-
 %\hypersetup{colorlinks=false, linkcolor=black}%pdfborder
-
 \hypersetup{hidelinks=true} %change this...
 %
 \hypersetup{
@@ -515,16 +480,8 @@ morecomment=[s]{<<<}{>>>}
   linkbordercolor = white
 }
 
-%\hypersetup{backref=true}
-
-%vi vill inte se boxar runt länkar [19i8~11]
-%\usepackage[colorlinks=true]{hyperref}
-
-%\usepackage[colorlinks=true, linktocpage=true]
-
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
-%\begin{comment}
 %från Christian Von Schultz' sida
 \usepackage{bbm}
 \newcommand{\N}{\ensuremath{\mathbbm{N}}}
@@ -533,13 +490,9 @@ morecomment=[s]{<<<}{>>>}
 \newcommand{\R}{\ensuremath{\mathbbm{R}}}
 \newcommand{\C}{\ensuremath{\mathbbm{C}}}
 
-
 %Matz transpose
 \newcommand{\tr}{\top}
 %\newcommand{\tr}{\mathrm T}
-
-
-%\end{comment}
 
 
 %27/6 1012
@@ -556,7 +509,6 @@ morecomment=[s]{<<<}{>>>}
 % {  \footnotesize\colorbox{lightblue}{#1}}
 
 %\renewcommand*{\glstextformat}[1]{\textsf{#1}}
-
 
 \lstset{language    = C}
 \lstset{linewidth   = 5.78in}%width of code box 4.5in
@@ -580,7 +532,6 @@ morecomment=[s]{<<<}{>>>}
 \definecolor{white}{rgb}{1, 1, 1}
 %\definecolor{citecol}{rgb}{0.2, 0.2, 1}
 \definecolor{citecol}{rgb}{1, 0.2, 0.2} %very visible to be able to see how many the report has over the report
-
 
 
 %\color[rgb]{0,0.5,1}
@@ -618,17 +569,7 @@ morecomment=[s]{<<<}{>>>}
 \DeclareCaptionFormat{listing}{\colorbox[rgb]{0, 0, 0}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
 \captionsetup[lstlisting]{format=listing, labelfont=white, textfont=white, singlelinecheck=false, font={bf,footnotesize}}
 
-
-
-
 \lstset{xleftmargin=\fboxsep, xrightmargin=-\fboxsep}
-
-%\DeclareCaptionFormat{listing}{%
-%  \parbox{\textwidth}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}\vskip-4pt}}
-%\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
-%\lstset{frame=lrb,xleftmargin=\fboxsep,xrightmargin=-\fboxsep}
-%\lstset{frameround=tttt}
-
 
 %\renewcommand{\thelstlisting}{\thesection-\arabic{lstlisting}}
 
@@ -745,9 +686,6 @@ morecomment=[s]{<<<}{>>>}
 
 %\newcommand{\tmpsection}[1]{}
 
-
-
-
 %\showcitenames
 %\nocite{*}
 
@@ -762,12 +700,8 @@ morecomment=[s]{<<<}{>>>}
 \definecolor{llightgray}{rgb}{0.9, 0.99, 0.93}
 \definecolor{tabletitle}{rgb}{0.85, 0.92, 0.85}
 \definecolor{tablegray}{rgb}{0.7, 0.8, 0.7}
-
 \definecolor{tablelight}{rgb}{0.98, 0.99, 0.98} %table background
-
 \definecolor{tabledark}{rgb}{0.95, 0.9, 0.8}%not used?
-
-
 
 \definecolor{lightgray}{gray}{0.95}
 \usepackage[table]{xcolor} %must be loaded last
@@ -783,7 +717,6 @@ morecomment=[s]{<<<}{>>>}
 %http://www.bradleymedia.org/latex-formatting/
 %\titleformat*{\section}
 %   {\normalfont\Large\bfseries\color{black} }
-
 
 
 \newenvironment{widepar}%
@@ -813,12 +746,20 @@ morecomment=[s]{<<<}{>>>}
 
 %http://tex.stackexchange.com/questions/38536/how-can-i-pass-underscore-to-newcommand-properly
 
-\newcommand{\codelst}{\begingroup
-  \catcode`_=12 \docodelst}
-\newcommand{\docodelst}[1]{%
-  \lstinputlisting[caption=\texttt{#1}]{#1}%
+% \newcommand{\codelst}{\begingroup
+%   \catcode`_=12 \docodelst}
+% \newcommand{\docodelst}[1]{%
+%   \lstinputlisting[caption=\texttt{#1}]{#1}%
+%   \endgroup
+% }
+
+\newcommand{\codelst}[1]{\begingroup
+  \catcode`_=12 \docodelst{#1}}
+\newcommand{\docodelst}[2]{%
+  \lstinputlisting[language=#1, caption=\texttt{#2}]{#2}%
   \endgroup
 }
+
 
 
 \renewcommand{\arraystretch}{1.1}
