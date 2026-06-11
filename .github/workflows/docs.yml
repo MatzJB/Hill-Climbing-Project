@@ -1,5 +1,4 @@
 name: Docs
-
 on:
   push:
     paths:
@@ -7,14 +6,11 @@ on:
   pull_request:
     paths:
       - 'doc/**'
-
 jobs:
   docs:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-
       - name: Install TeX
         run: |
           sudo apt-get update
@@ -22,9 +18,10 @@ jobs:
             texlive-latex-base \
             texlive-latex-extra \
             texlive-bibtex-extra \
+            texlive-fonts-extra \
             texlive-luatex \
             texlive-science
-
+            
       - name: Build documentation
         working-directory: doc
         run: |
