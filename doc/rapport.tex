@@ -57,9 +57,7 @@ Ultimately, the project aims to answer two questions:
 \section{Introduction}
 
 Approximating images using simple primitives is a useful test case for studying optimization under constrained representations. In this project, a raster image is reconstructed using a set of colored discs, optimized through HCA. The problem is deliberately simple in formulation but computationally demanding, making it suitable for exploring performance-oriented implementation strategies.
-
 The work focuses on comparing a sequential CPU implementation in C++ with a parallel GPU implementation using CUDA. Rather than emphasizing visual fidelity alone, the project treats image approximation as a proxy for analyzing convergence behavior, parallelization opportunities, and hardware efficiency. This provides a practical context for examining how algorithm design scales across different compute architectures.
-
 
 \subsection{The algorithm}
 
@@ -77,7 +75,6 @@ The randomness of the disc placement depends on
 \end{comment}
 
 \subsection{Experiments}
-
 
 
 \subsection{Evaluation methods}
