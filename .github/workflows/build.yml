@@ -2,7 +2,36 @@ name: Build
 
 on:
   push:
+    paths:
+      - '**/*.cpp'
+      - '**/*.c'
+      - '**/*.cc'
+      - '**/*.cxx'
+      - '**/*.h'
+      - '**/*.hpp'
+      - '**/*.hxx'
+      - '**/*.cu'
+      - '**/*.cuh'
+      - 'CMakeLists.txt'
+      - '**/CMakeLists.txt'
+      - '**/*.cmake'
+      - 'build.bat'
+
   pull_request:
+    paths:
+      - '**/*.cpp'
+      - '**/*.c'
+      - '**/*.cc'
+      - '**/*.cxx'
+      - '**/*.h'
+      - '**/*.hpp'
+      - '**/*.hxx'
+      - '**/*.cu'
+      - '**/*.cuh'
+      - 'CMakeLists.txt'
+      - '**/CMakeLists.txt'
+      - '**/*.cmake'
+      - 'build.bat'
 
 jobs:
   build:
