@@ -20,7 +20,8 @@ jobs:
             texlive-bibtex-extra \
             texlive-fonts-extra \
             texlive-luatex \
-            texlive-science
+            texlive-science \
+            biber
             
       - name: Build documentation
         working-directory: doc
