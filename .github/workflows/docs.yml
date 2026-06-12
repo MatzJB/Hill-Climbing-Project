@@ -21,6 +21,7 @@ jobs:
             texlive-fonts-extra \
             texlive-luatex \
             texlive-science \
+            texlive-extra-utils \
             biber
             
       - name: Build documentation
@@ -30,4 +31,4 @@ jobs:
           biber rapport
           pdflatex rapport
           pdflatex rapport
-          texlua checkcites.lua --unused rapport.aux
+          texlua $(kpsewhich checkcites.lua) --unused rapport.aux
